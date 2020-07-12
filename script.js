@@ -16,6 +16,8 @@ onload = () => {
 };
 let time = 0
 let update = () => {
+	page.width = innerWidth;
+	page.height = innerHeight;
 	player.update();
 	let imageData = ctx.getImageData(0, 0, 500, 500);
 	for(let i = 3; i < (imageData.data.length); i += 4) {
@@ -91,7 +93,7 @@ let Player = function() {
 			this.x %= game.width;
 			if(this.x < 0) this.x += game.width;
 			this.y %= game.height;
-			if(this.y < 0) this.x += game.height;
+			if(this.y < 0) this.y += game.height;
 			this.x += velocity.x;
 			this.y += velocity.y;
 			this.radian += this.rot;
