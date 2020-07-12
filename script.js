@@ -26,8 +26,8 @@ let update = () => {
 	player.draw();
 	let lL = innerWidth < innerHeight? innerWidth: innerHeight;
 	for(var _x = -1; _x <= 1; _x++) for(var _y = -1; _y <= 1; _y++) {
-		pen.fillRect((innerWidth - lL)/2 + _x * lL, (innerHeight - lL)/2 + _y * lL, lL, lL);
-		pen.drawImage(canvas, (innerWidth - lL)/2 + _x * lL, (innerHeight - lL)/2 + _y * lL, lL, lL);
+		pen.fillRect((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL), (innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL), lL, lL);
+		pen.drawImage(canvas, (innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL), (innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL), lL, lL);
 	}
 	requestAnimationFrame(update);
 };
@@ -88,10 +88,10 @@ let Player = function() {
 				velocity.x -= cos(this.radian) * this.r * this.spd;
 				velocity.y -= sin(this.radian) * this.r * this.spd;
 			}
+			this.x %= game.width;
 			if(this.x < 0) this.x += game.width;
-			if(this.x > game.width) this.x -= game.width;
+			this.y %= game.height;
 			if(this.y < 0) this.x += game.height;
-			if(this.y > game.height) this.x -= game.height;
 			this.x += velocity.x;
 			this.y += velocity.y;
 			this.radian += this.rot;
