@@ -27,9 +27,9 @@ let update = () => {
 	ctx.putImageData(imageData, 0, 0);
 	player.draw();
 	let lL = innerWidth < innerHeight? innerWidth: innerHeight;
-	for(var _x = -1; _x <= 1; _x++) for(var _y = -1; _y <= 1; _y++) {
-		pen.fillRect((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL), (innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL), lL, lL);
-		pen.drawImage(canvas, (innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL), (innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL), lL, lL);
+	for(var _x = -2; _x <= 2; _x++) for(var _y = -2; _y <= 2; _y++) {
+		pen.fillRect(Math.floor((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL)), Math.floor((innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL)), lL, lL);
+		pen.drawImage(canvas, Math.floor((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL)), Math.floor((innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL)), lL, lL);
 	}
 	requestAnimationFrame(update);
 };
