@@ -1,129 +1,69 @@
-let canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
-let page = document.createElement("canvas"), pen = page.getContext("2d");
-let {assign} = Object,
-	{sin, cos, floor, round, PI, random, sqrt, pow} = Math;
-	game = {
-		width: 250,
-		height: 250
-	}
-onload = () => {
-	let {width, height} = game;
-	assign(canvas, {width, height});
-	page.width = innerWidth;
-	page.height = innerHeight;
-	document.body.appendChild(page);
+onload = function() {
+	var {body} = document;
+	body.appendChild(canvas);
+	onresize();
+	player.x = (game.width - player.s)/2;
+	player.y = (game.height - player.s)/2;
+	for(let i = 0; i < 5; i++) spawn(new Enemy)
+	for(let i = 0; i < 5; i++) spawn(new Walker)
 	update();
 };
-let time = 0
-let update = () => {
-	page.width = innerWidth;
-	page.height = innerHeight;
+onresize = function() {
+	Object.assign(canvas, {
+		width: innerWidth,
+		height: innerHeight
+	});
+	ctx.scale(scale, scale);
+}
+onblur = function() {
+	keys = {};
+	cancelAnimationFrame(request);
+}
+onfocus = function() {request = requestAnimationFrame(update);}
+var game = {
+	get width() {return innerWidth/scale},
+	get height() {return innerHeight/scale}
+}
+function clear() {
+	ctx.beginPath();
+	ctx.rect(0, 0, game.width, game.height);
+	ctx.fillStyle = "#0005"; ctx.fill();
+}
+var last = Date.now(), request;
+function update() {
+	var now = Date.now();
+	if(now < last + (1000)/fps) {
+		onfocus();
+		return;
+	}else last = now;
 	player.update();
-	{
-		let imageData = ctx.getImageData(0, 0, 500, 500);
-		for(let i = 3; i < (imageData.data.length); i += 4) {
-			if(imageData.data[i]) imageData.data[i] -= 15;
-			if(imageData.data[i] < 0) imageData.data[i] = 0;
-		}
-		while(random() < 99/100) {
-			let a = imageData.data.length/4
-			a = floor(random() * a) * 4;
-			for(let b = 0; b < 4; b++) {
-				imageData.data[a + b] = floor(random() * (b - 3? 256: 64)) + (b - 3? 0: 192);
+	for(let enemy of enemies) enemy.update();
+	for(let a = 0; a < enemies.length; a++) for(let b = a + 1; b < enemies.length; b++) {
+		let enemy = enemies[a], enemy2 = enemies[b];
+		if(Entity.isTouching(enemy, enemy2)) {
+			let s = (enemy.s + enemy2.s)/2,
+				x = enemy.mx - enemy2.mx,
+				y = enemy.my - enemy2.my;
+			if(x <= s) {
+				enemy.velocity.x += x/10;
+				enemy2.velocity.x -= x/10;
+			}
+			if(y <= s) {
+				enemy.velocity.y += y/10;
+				enemy2.velocity.y -= y/10;
 			}
 		}
-		ctx.putImageData(imageData, 0, 0);
 	}
+	clear();
 	player.draw();
-	let lL = innerWidth < innerHeight? innerWidth: innerHeight;
-	for(var _x = -2; _x <= 2; _x++) for(var _y = -2; _y <= 2; _y++) {
-		pen.fillRect(round((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL)), round((innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL)), lL, lL);
-		pen.drawImage(canvas, round((innerWidth - lL)/2 + _x * lL + ((-player.x/game.width + 1/2) * lL)), round((innerHeight - lL)/2 + _y * lL + ((-player.y/game.height + 1/2) * lL)), lL, lL);
-	}
-	requestAnimationFrame(update);
-};
-function Entity() {
-	var velocity = {x: 0, y: 0}
-	assign(this, {
-		velocity, radian: 0,
-		x: 0, y: 0,
-		r: 5, rot: 0, friction: 0.8,
-		spd: 0.02,
-		turn(d) {this.rot += d * PI/180},
-		tick() {},
-		update() {
-			this.tick();
-			this.x %= game.width;
-			if(this.x < 0) this.x += game.width;
-			this.y %= game.height;
-			if(this.y < 0) this.y += game.height;
-			this.x += velocity.x;
-			this.y += velocity.y;
-			this.radian += this.rot;
-			this.rot *= this.friction;
-			velocity.x *= sqrt(this.friction);
-			velocity.y *= sqrt(this.friction);}
-	});
+	for(let enemy of enemies) enemy.draw();
+	onfocus();
 }
-let Player = function() {
-	Entity.call(this);
-	var {velocity} = this;
-	assign(this, {
-		radian: PI * 3/2,
-		x: game.width/2, y: game.height/2,
-		turn(d) {this.rot += d * PI/180},
-		draw() {
-			for(var _x = -1; _x <= 1; _x++) for(var _y = -1; _y <= 1; _y++) {
-				var {x, y, r, radian} = this;
-				x += _x * game.width; y += _y * game.height;
-				r /= PI/4; radian += PI/4;
-				var a = cos(radian) * r, b = sin(radian) * r,
-					c = a/4, d = b/4;
-				ctx.fillStyle = "#aaf";
-				ctx.strokeStyle = "#aaf";
-				ctx.lineWidth = r/15;
-				ctx.lineJoin = "round";
-				ctx.lineCap = "round";
-				ctx.beginPath();
-				ctx.moveTo(x + a - c + d, y + b - c - d);
-				ctx.lineTo(x + b + c - d, y - a + c + d);
-				ctx.quadraticCurveTo(x + b, y - a, x + b - c - d, y - a + c - d);
-				ctx.lineTo(x - a + c + d, y - b - c + d);
-				ctx.quadraticCurveTo(x - a, y - b, x - a + c - d, y - b + c + d);
-				ctx.lineTo(x - b - c + d, y + a - c - d);
-				ctx.quadraticCurveTo(x - b, y + a, x - b + c + d, y + a - c + d);
-				ctx.lineTo(x + a - c - d, y + b + c - d);
-				ctx.quadraticCurveTo(x + a, y + b, x + a - c + d, y + b - c - d);
-				ctx.fill(); ctx.stroke();
-				ctx.beginPath();
-				ctx.fillStyle = "#afa";
-				ctx.strokeStyle = "#9e9";
-				ctx.lineWidth = r/15;
-				r /= 3; radian -= PI/4;
-				ctx.moveTo(x + cos(radian) * r, y + sin(radian) * r)
-				radian += PI * 2/3;
-				ctx.lineTo(x + cos(radian) * r, y + sin(radian) * r)
-				radian += PI * 2/3;
-				ctx.lineTo(x + cos(radian) * r, y + sin(radian) * r)
-				radian += PI * 2/3;
-				ctx.lineTo(x + cos(radian) * r, y + sin(radian) * r)
-				ctx.fill(); ctx.stroke();
-			}
-		},
-		tick() {
-			if(keys.a) this.turn(-1);
-			if(keys.d) this.turn(1);
-			if(keys.w) {
-				velocity.x += cos(this.radian) * this.r * this.spd;
-				velocity.y += sin(this.radian) * this.r * this.spd;
-			}
-			if(keys.s) {
-				velocity.x -= cos(this.radian) * this.r * this.spd;
-				velocity.y -= sin(this.radian) * this.r * this.spd;
-			}
-		}
-	});
+var keys = {};
+onkeydown = function(pressed) {
+	if(!keys[pressed.key]) keys[pressed.key] = 1;
+	else keys[pressed.key] = 3;
 }
-let keys = {}, player = new Player;
-onkeydown = (e) => keys[e.key] = 1;
-onkeyup = (e) => delete keys[e.key];
+onkeyup = function(released) {
+	delete keys[released.key];
+}
