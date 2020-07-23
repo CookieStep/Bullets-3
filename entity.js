@@ -1,5 +1,8 @@
 class Entity{
-	constructor() {this.uid = Entity.uid++;}
+	constructor() {
+		this.uid = Entity.uid++;
+		this.hp = this.maxHp; this.inv = 0;
+	}
 	tick() {}
 	forces() {
 		var {velocity, spd} = this;
@@ -33,16 +36,25 @@ class Entity{
 		velocity.y *= y;
 	}
 	update() {
+		if(this.lastShot > 0) this.lastShot--;
+		if(this.inv > 0) this.inv--;
+		if(this.hp < this.maxHp) this.hp += this.regen;
+		if(this.hp > this.maxHp) this.hp = this.maxHp;
 		this.tick();
 		this.forces();
 		this.screenlock();
 	}
 	draw() {
-		var {x, y, s, color} = this;
+		var {x, y, s, color, hp, maxHp, inv} = this;
 		ctx.beginPath();
+		ctx.lineWidth = s/10;
+		ctx.globalAlpha = hp/maxHp;
 		ctx.fillStyle = color;
+		ctx.strokeStyle = (inv % 10 > 5)? "white": color;
 		ctx.rect(x, y, s, s);
 		ctx.fill();
+		ctx.globalAlpha = 1;
+		ctx.stroke();
 	}
 	get dis() {
 		var {velocity} = this;
@@ -68,10 +80,18 @@ class Entity{
 	get my() {
 		return this.y + this.s/2
 	}
+	onHit(attacker) {
+		if(!this.inv) this.hp -= attacker.hit();
+	}
+	hit() {
+		return this.atk;
+	}
 	spd = 0.2; acl = 0.02;
 	velocity = {x: 0, y: 0};
 	color = "grey"; s = 1;
-	isMoving = false;
+	maxHp = 10; inv = 0;
+	regen = 0.01; atk = 5;
+	isMoving = false; inf = [];
 	static isTouching = (a, b) => (
 		abs(a.mx - b.mx) < (a.s + b.s)/2
 	) && (
