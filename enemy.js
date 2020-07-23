@@ -29,4 +29,11 @@ class Walker extends Enemy{
 		}else this.dis = this.spd;
 		this.isMoving = true;
 	}
+	draw() {
+		var {x, y, s, color} = this;
+		ctx.beginPath();
+		ctx.fillStyle = color;
+		ctx.rect(x, y, s, s, s/3);
+		ctx.fill();
+	}
 }
