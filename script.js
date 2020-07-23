@@ -6,6 +6,7 @@ onload = function() {
 	player.y = (game.height - player.s)/2;
 	for(let i = 0; i < 5; i++) spawn(new Enemy)
 	for(let i = 0; i < 5; i++) spawn(new Walker)
+	for(let i = 0; i < 5; i++) spawn(new Stayer)
 	update();
 };
 onresize = function() {

@@ -12,20 +12,25 @@ class Entity{
 		var {velocity} = this;
 		if(this.x < 0) {
 			this.x = 0;
-			velocity.x *= -1;
+			this.hitWall(-1, 1);
 		}
 		if(this.x > game.width - this.s) {
 			this.x = game.width - this.s;
-			velocity.x *= -1;
+			this.hitWall(-1, 1);
 		}
 		if(this.y < 0) {
 			this.y = 0;
-			velocity.y *= -1;
+			this.hitWall(1, -1);
 		}
 		if(this.y > game.height - this.s) {
 			this.y = game.height - this.s;
-			velocity.y *= -1;
+			this.hitWall(1, -1);
 		}
+	}
+	hitWall(x, y) {
+		var {velocity} = this;
+		velocity.x *= x;
+		velocity.y *= y;
 	}
 	update() {
 		this.tick();
