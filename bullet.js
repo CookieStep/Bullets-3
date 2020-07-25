@@ -6,7 +6,7 @@ class Bullet extends Entity{
         this.rad = rad;
     }
     s = 0.3; atk = 1;
-    spd = 0.2; time = 75;
+    spd = 0.3; time = 75;
 	draw() {
 		var {x, y, mx, my, s, rad, color, inv, hp, maxHp} = this;
         ctx.save();

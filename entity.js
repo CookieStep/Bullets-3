@@ -51,7 +51,7 @@ class Entity{
 		ctx.rotate(rad);
 		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Entity.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
 		ctx.restore();
 	}
 	get dis() {
@@ -73,10 +73,16 @@ class Entity{
 		velocity.y = sin(rad) * dis;
 	}
 	get mx() {
-		return this.x + this.s/2
+		return this.x + this.s/2;
 	}
 	get my() {
-		return this.y + this.s/2
+		return this.y + this.s/2;
+	}
+	set my(my) {
+		this.y = my - this.s/2;
+	}
+	set mx(mx) {
+		this.x = mx - this.s/2;
 	}
 	onHit(attacker) {
 		if(!this.inv) this.hp -= attacker.hit();
@@ -90,6 +96,7 @@ class Entity{
 	maxHp = 1; inv = 0;
 	regen = 0.01; atk = 1;
 	isMoving = false; inf = [];
+	image = Entity;
 	static isTouching = (a, b) => (
 		abs(a.mx - b.mx) < (a.s + b.s)/2
 	) && (
@@ -98,19 +105,19 @@ class Entity{
 	static distance = (a, b) => distance(a.mx, a.my, b.mx, b.my);
 	static uid = 0n;
 	static image(hp, maxHp, color, inv) {
-		hp = Math.round(hp);
+		hp = Math.floor(hp);
 		inv = inv % 10 > 5;
-		var id = `${hp} ${maxHp} ${inv} ${color}`;
+		var id = `${hp/maxHp} ${inv} ${color}`;
 		if(!this.store[id]) {
-			this.store[id] = this.create(hp, maxHp, color, inv);
+			this.store[id] = this.create(hp/maxHp, color, inv);
 		}
 		return this.store[id];
 	}
-	static create(hp, maxHp, color, inv) {
+	static create(hp, color, inv) {
 		let canvas = document.createElement("canvas"),
 			ctx = canvas.getContext("2d"),
 			s = 1,
-			s2 = s * scale * 1.2;
+			s2 = ceil(s * scale * 1.2);
 		Object.assign(canvas, {
 			width: s2,
 			height: s2
@@ -120,12 +127,17 @@ class Entity{
 		ctx.lineWidth = s/10;
 		ctx.fillStyle = color;
 		ctx.strokeStyle = inv? "white": color;
-		ctx.rect(0.1, 0.1, s, s);
-		ctx.globalAlpha = hp/maxHp;
+		ctx.translate(0.1, 0.1);
+		this.draw(ctx, s);
+		ctx.translate(-0.1, -0.1);
+		ctx.globalAlpha = hp;
 		ctx.fill();
 		ctx.globalAlpha = 1;
 		ctx.stroke();
 		return canvas;
+	}
+	static draw(ctx, s) {
+		ctx.rect(0, 0, s, s);
 	}
 	static store = {};
 	static clearImages() {

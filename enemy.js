@@ -29,16 +29,7 @@ class Walker extends Enemy{
 		}else this.dis += this.acl;
 		this.isMoving = true;
 	}
-	draw() {
-		var {x, y, mx, my, s, rad, color, inv, hp, maxHp} = this;
-        ctx.save();
-        ctx.translate(mx, my);
-        ctx.rotate(rad);
-		ctx.translate(-mx, -my);
-		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Player.image(hp, maxHp, color, inv), x, y, s, s);
-		ctx.restore();
-	}
+	image = Player;
 }
 class Stayer extends Enemy{
 	color = "#afa";
