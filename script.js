@@ -49,6 +49,16 @@ function update() {
 			if(Entity.isTouching(enemy, bullet)) {
 				bullet.onHit(enemy);
 				enemy.onHit(bullet);
+				let enemy2 = bullet;
+				let s = (enemy.s + enemy2.s)/2,
+					x = enemy.mx - enemy2.mx,
+					y = enemy.my - enemy2.my;
+				if(x <= s) {
+					enemy.velocity.x += bullet.velocity.x * -x;
+				}
+				if(y <= s) {
+					enemy.velocity.y += bullet.velocity.y * -y;
+				}
 			}
 		}
 		for(let b = a + 1; b < enemies.length; b++) {

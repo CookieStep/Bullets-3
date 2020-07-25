@@ -4,18 +4,6 @@ class Player extends Entity{
 		this.rspd = super.spd;
 		this.inv = 50;
 	}
-	draw() {
-		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.beginPath();
-		ctx.lineWidth = s/10;
-		ctx.fillStyle = color;
-		ctx.strokeStyle = (inv % 10 > 5)? "white": color;
-		ctx.rect(x, y, s, s, s/3);
-		ctx.globalAlpha = hp/maxHp;
-		ctx.fill();
-		ctx.globalAlpha = 1;
-		ctx.stroke();
-	}
 	tick() {
 		var {velocity, acl} = this,
 			mov = {x: 0, y: 0};
@@ -62,7 +50,7 @@ class Player extends Entity{
 			let rad = atan2(mov.y, mov.x);
 			let n = PI/64;
 			rad += random(n) - n/2;
-			this.lastShot = 10;
+			this.lastShot = 5;
 			Bullet.summon(this, new Bullet(rad));
 		}
 	}
@@ -72,7 +60,30 @@ class Player extends Entity{
 			this.inv = 50;
 		}
 	}
-	atk = 0.1; lastShot = 0;
+	draw() {
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(Player.image(hp, maxHp, s, color, inv), x, y, s, s);
+	}
+	lastShot = 0;
 	color = "#aaf";
+	static create(hp, maxHp, s, color, inv) {
+		let canvas = document.createElement("canvas"),
+			ctx = canvas.getContext("2d");
+		Object.assign(canvas, {
+			width: s * scale * 1.2,
+			height: s * scale * 1.2
+		})
+		ctx.scale(scale, scale);
+		ctx.beginPath();
+		ctx.lineWidth = s/10;
+		ctx.fillStyle = color;
+		ctx.strokeStyle = inv? "white": color;
+		ctx.rect(0.1, 0.1, s, s, s/3);
+		ctx.globalAlpha = hp/maxHp;
+		ctx.fill();
+		ctx.globalAlpha = 1;
+		ctx.stroke();
+		return canvas;
+	}
 }
 player = new Player;

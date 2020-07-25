@@ -46,15 +46,7 @@ class Entity{
 	}
 	draw() {
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.beginPath();
-		ctx.lineWidth = s/10;
-		ctx.globalAlpha = hp/maxHp;
-		ctx.fillStyle = color;
-		ctx.strokeStyle = (inv % 10 > 5)? "white": color;
-		ctx.rect(x, y, s, s);
-		ctx.fill();
-		ctx.globalAlpha = 1;
-		ctx.stroke();
+		ctx.drawImage(Entity.image(hp, maxHp, s, color, inv), x, y, s, s);
 	}
 	get dis() {
 		var {velocity} = this;
@@ -89,8 +81,8 @@ class Entity{
 	spd = 0.2; acl = 0.02;
 	velocity = {x: 0, y: 0};
 	color = "grey"; s = 1;
-	maxHp = 10; inv = 0;
-	regen = 0.01; atk = 5;
+	maxHp = 1; inv = 0;
+	regen = 0.01; atk = 1;
 	isMoving = false; inf = [];
 	static isTouching = (a, b) => (
 		abs(a.mx - b.mx) < (a.s + b.s)/2
@@ -99,4 +91,36 @@ class Entity{
 	);
 	static distance = (a, b) => distance(a.mx, a.my, b.mx, b.my);
 	static uid = 0n;
+	static image(hp, maxHp, s, color, inv) {
+		hp = Math.round(hp);
+		inv = inv % 10 > 5;
+		var id = `${hp} ${maxHp} ${inv} ${color} ${s}`;
+		if(!this.store[id]) {
+			this.store[id] = this.create(hp, maxHp, s, color, inv);
+		}
+		return this.store[id];
+	}
+	static create(hp, maxHp, s, color, inv) {
+		let canvas = document.createElement("canvas"),
+			ctx = canvas.getContext("2d");
+		Object.assign(canvas, {
+			width: s * scale * 1.2,
+			height: s * scale * 1.2
+		})
+		ctx.scale(scale, scale);
+		ctx.beginPath();
+		ctx.lineWidth = s/10;
+		ctx.fillStyle = color;
+		ctx.strokeStyle = inv? "white": color;
+		ctx.rect(0.1, 0.1, s, s);
+		ctx.globalAlpha = hp/maxHp;
+		ctx.fill();
+		ctx.globalAlpha = 1;
+		ctx.stroke();
+		return canvas;
+	}
+	static store = {};
+	static clearImages() {
+		this.store = {};
+	}
 }

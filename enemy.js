@@ -30,16 +30,8 @@ class Walker extends Enemy{
 		this.isMoving = true;
 	}
 	draw() {
-		var {x, y, s, color, inv, hp, maxHp} = this;
-		ctx.beginPath();
-		ctx.lineWidth = s/10;
-		ctx.fillStyle = color;
-		ctx.strokeStyle = (inv % 10 > 5)? "white": color;
-		ctx.rect(x, y, s, s, s/3);
-		ctx.globalAlpha = hp/maxHp;
-		ctx.fill();
-		ctx.globalAlpha = 1;
-		ctx.stroke();
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(Player.image(hp, maxHp, s, color, inv), x, y, s, s);
 	}
 }
 class Stayer extends Enemy{
@@ -63,20 +55,12 @@ class Stayer extends Enemy{
 		var {x, y, s, rad, color, inv, hp, maxHp, r} = this;
 		s /= 2; x += s; y += s; rad += PI/2;
 		rad = (rad + r)/2;
-		ctx.beginPath();
-		s /= sin(PI / 4);
-		var a = cos(rad) * s, b = sin(rad) * s;
-		ctx.lineWidth = s/5;
-		ctx.fillStyle = color;
-		ctx.strokeStyle = (inv % 10 > 5)? "white": color;
-		ctx.moveTo(x + a, y + b);
-		ctx.lineTo(x + b, y - a);
-		ctx.lineTo(x - a, y - b);
-		ctx.lineTo(x - b, y + a);
-		ctx.closePath();
-		ctx.globalAlpha = hp/maxHp;
-		ctx.fill();
-		ctx.globalAlpha = 1;
-		ctx.stroke();
+		ctx.save();
+		ctx.translate(x, y);
+		ctx.rotate(rad * 180/PI);
+		ctx.translate(-x, -y);
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(Entity.image(hp, maxHp, s, color, inv), x, y, s, s);
+		ctx.restore();
 	}
 }

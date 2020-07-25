@@ -5,8 +5,8 @@ class Bullet extends Entity{
         this.dis = this.spd;
         this.rad = rad;
     }
-    s = 0.2; atk = 7;
-    spd = 0.2; time = 100;
+    s = 0.2; atk = 1;
+    spd = 0.25; time = 75;
     onHit() {
         this.time = 0;
     }
