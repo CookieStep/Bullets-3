@@ -30,8 +30,14 @@ class Walker extends Enemy{
 		this.isMoving = true;
 	}
 	draw() {
+		var {x, y, mx, my, s, rad, color, inv, hp, maxHp} = this;
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.rotate(rad);
+		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Player.image(hp, maxHp, s, color, inv), x, y, s, s);
+		ctx.drawImage(Player.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
 	}
 }
 class Stayer extends Enemy{
@@ -50,17 +56,5 @@ class Stayer extends Enemy{
 		var dir = {x: cos(r), y: sin(r)};
 		dir.x *= x; dir.y *= y;
 		this.r = atan2(dir.y, dir.x);
-	}
-	draw() {
-		var {x, y, s, rad, color, inv, hp, maxHp, r} = this;
-		s /= 2; x += s; y += s; rad += PI/2;
-		rad = (rad + r)/2;
-		ctx.save();
-		ctx.translate(x, y);
-		ctx.rotate(rad * 180/PI);
-		ctx.translate(-x, -y);
-		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Entity.image(hp, maxHp, s, color, inv), x, y, s, s);
-		ctx.restore();
 	}
 }

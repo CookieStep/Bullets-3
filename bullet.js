@@ -5,8 +5,18 @@ class Bullet extends Entity{
         this.dis = this.spd;
         this.rad = rad;
     }
-    s = 0.2; atk = 1;
-    spd = 0.25; time = 75;
+    s = 0.3; atk = 1;
+    spd = 0.2; time = 75;
+	draw() {
+		var {x, y, mx, my, s, rad, color, inv, hp, maxHp} = this;
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.rotate(rad);
+		ctx.translate(-mx, -my);
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(Entity.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
+	}
     onHit() {
         this.time = 0;
     }

@@ -45,8 +45,14 @@ class Entity{
 		this.screenlock();
 	}
 	draw() {
+		var {x, y, mx, my, s, rad, color, inv, hp, maxHp, r} = this;
+		ctx.save();
+		ctx.translate(mx, my);
+		ctx.rotate(rad);
+		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Entity.image(hp, maxHp, s, color, inv), x, y, s, s);
+		ctx.drawImage(Entity.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
 	}
 	get dis() {
 		var {velocity} = this;
@@ -91,22 +97,24 @@ class Entity{
 	);
 	static distance = (a, b) => distance(a.mx, a.my, b.mx, b.my);
 	static uid = 0n;
-	static image(hp, maxHp, s, color, inv) {
+	static image(hp, maxHp, color, inv) {
 		hp = Math.round(hp);
 		inv = inv % 10 > 5;
-		var id = `${hp} ${maxHp} ${inv} ${color} ${s}`;
+		var id = `${hp} ${maxHp} ${inv} ${color}`;
 		if(!this.store[id]) {
-			this.store[id] = this.create(hp, maxHp, s, color, inv);
+			this.store[id] = this.create(hp, maxHp, color, inv);
 		}
 		return this.store[id];
 	}
-	static create(hp, maxHp, s, color, inv) {
+	static create(hp, maxHp, color, inv) {
 		let canvas = document.createElement("canvas"),
-			ctx = canvas.getContext("2d");
+			ctx = canvas.getContext("2d"),
+			s = 1,
+			s2 = s * scale * 1.2;
 		Object.assign(canvas, {
-			width: s * scale * 1.2,
-			height: s * scale * 1.2
-		})
+			width: s2,
+			height: s2
+		});
 		ctx.scale(scale, scale);
 		ctx.beginPath();
 		ctx.lineWidth = s/10;

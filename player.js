@@ -4,6 +4,16 @@ class Player extends Entity{
 		this.rspd = super.spd;
 		this.inv = 50;
 	}
+	draw() {
+		var {x, y, mx, my, s, rad, color, inv, hp, maxHp} = this;
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.rotate(rad);
+		ctx.translate(-mx, -my);
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(Player.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
+	}
 	tick() {
 		var {velocity, acl} = this,
 			mov = {x: 0, y: 0};
@@ -49,30 +59,20 @@ class Player extends Entity{
 		if((mov.x || mov.y) && this.lastShot <= 0) {
 			let rad = atan2(mov.y, mov.x);
 			let n = PI/64;
-			rad += random(n) - n/2;
+			// rad += random(n) - n/2;
 			this.lastShot = 5;
 			Bullet.summon(this, new Bullet(rad));
 		}
 	}
-	onHit(attacker) {
-		if(!this.inv) {
-			this.hp -= attacker.hit();
-			this.inv = 50;
-		}
-	}
-	draw() {
-		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Player.image(hp, maxHp, s, color, inv), x, y, s, s);
-	}
-	lastShot = 0;
-	color = "#aaf";
-	static create(hp, maxHp, s, color, inv) {
+	static create(hp, maxHp, color, inv) {
 		let canvas = document.createElement("canvas"),
-			ctx = canvas.getContext("2d");
+			ctx = canvas.getContext("2d"),
+			s = 1,
+			s2 = s * scale * 1.2;
 		Object.assign(canvas, {
-			width: s * scale * 1.2,
-			height: s * scale * 1.2
-		})
+			width: s2,
+			height: s2
+		});
 		ctx.scale(scale, scale);
 		ctx.beginPath();
 		ctx.lineWidth = s/10;
@@ -85,5 +85,14 @@ class Player extends Entity{
 		ctx.stroke();
 		return canvas;
 	}
+	static store = {};
+	onHit(attacker) {
+		if(!this.inv) {
+			this.hp -= attacker.hit();
+			this.inv = 50;
+		}
+	}
+	atk = 1; lastShot = 0;
+	color = "#aaf";
 }
 player = new Player;
