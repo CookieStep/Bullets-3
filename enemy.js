@@ -1,4 +1,8 @@
 class Enemy extends Entity{
+	constructor() {
+		super();
+		this.spd *= 3/4;
+	}
 	color = "#fff";
 	static spawn(what) {
 		function check() {
@@ -39,8 +43,8 @@ class Stayer extends Enemy{
 	r = random(PI * 2);
 	tick() {
 		var {velocity} = this;
-		velocity.x += cos(this.r) * this.acl;
-		velocity.y += sin(this.r) * this.acl;
+		velocity.x += cos(this.r) * this.spd;
+		velocity.y += sin(this.r) * this.spd;
 		this.isMoving = true;
 	}
 	xp = 20;
@@ -53,4 +57,21 @@ class Stayer extends Enemy{
 		this.r = atan2(dir.y, dir.x);
 		Wall.play();
 	}
+}
+class Waller extends Enemy{
+	tick() {
+		let x = this.mov.x * (game.width - this.s) + this.s/2,
+			y = this.mov.y * (game.height - this.s) + this.s/2;
+		let r = atan2(y - this.my, x - this.mx);
+		this.velocity.x += cos(r) * this.acl;
+		this.velocity.y += sin(r) * this.acl;
+	}
+	hitWall(x, y) {
+		var {r, velocity} = this;
+		velocity.x *= x;
+		velocity.y *= y;
+		this.mov = {x: round(random()), y: round(random())}
+	}
+	color = "#ffa"; xp = 30;
+	mov = {x: round(random()), y: round(random())}
 }
