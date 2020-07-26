@@ -45,6 +45,7 @@ class Player extends Entity{
 		if((mov.x || mov.y) && this.lastShot <= 0) {
 			this.shoot(mov);
 		}
+		if(keys.glide) this.isMoving = true;
 	}
 	image = Player;
 	move(mov) {
