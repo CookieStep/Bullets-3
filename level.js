@@ -66,7 +66,7 @@ function setupLevels() {
 				if(tipNum < 5)
 					tip("Watch out, these boxes are determind", 100, "#afa");
 			};
-			if(this.summon > 0) {if(Enemy.spawn(new Waller) && this.summon) this.summon--}
+			if(this.summon > 0) {if(Enemy.spawn(new Stayer) && this.summon) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker) && this.summon2) this.summon2--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
