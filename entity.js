@@ -105,7 +105,7 @@ class Entity{
 	color = "grey"; s = 1;
 	maxHp = 1; inv = 0;
 	regen = 0.01; atk = 1;
-	xp = 10;
+	xp = 0;
 	isMoving = false; inf = [];
 	image = Entity;
 	static isTouching = (a, b) => (

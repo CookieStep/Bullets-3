@@ -11,16 +11,16 @@ class Player extends Entity{
 		if(keys.down) mov.y++;
 		if(keys.up) mov.y--;
 		if(keys.right == 1) {
-			mov.x++; keys.d = 2;
+			mov.x++; keys.right = 2;
 		}
 		if(keys.left == 1) {
-			mov.x--; keys.a = 2;
+			mov.x--; keys.left = 2;
 		}
 		if(keys.down == 1) {
-			mov.y++; keys.s = 2;
+			mov.y++; keys.down = 2;
 		}
 		if(keys.up == 1) {
-			mov.y--; keys.w = 2;
+			mov.y--; keys.up = 2;
 		}
 		if(mov.x || mov.y) {
 			this.move(mov);
@@ -31,16 +31,16 @@ class Player extends Entity{
 		if(keys.down2) mov.y++;
 		if(keys.up2) mov.y--;
 		if(keys.right2 == 1) {
-			mov.x++; keys.d = 2;
+			mov.x++; keys.right2 = 2;
 		}
 		if(keys.left2 == 1) {
-			mov.x--; keys.a = 2;
+			mov.x--; keys.left2 = 2;
 		}
 		if(keys.down2 == 1) {
-			mov.y++; keys.s = 2;
+			mov.y++; keys.down2 = 2;
 		}
 		if(keys.up2 == 1) {
-			mov.y--; keys.w = 2;
+			mov.y--; keys.up2 = 2;
 		}
 		if((mov.x || mov.y) && this.lastShot <= 0) {
 			this.shoot(mov);

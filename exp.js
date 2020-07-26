@@ -34,6 +34,7 @@ function xp(what) {
             xp.x = what.x + (what.s - xp.s)/2;
             xp.y = what.y + (what.s - xp.s)/2;
             xp.dis = xp.spd;
+            xp.xp = what.xp/10;
             xp.rad = PI * i/5;
             exp.push(xp);
         }

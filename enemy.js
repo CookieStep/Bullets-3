@@ -20,6 +20,7 @@ class Enemy extends Entity{
 		enemies.push(what)
 		return true;
 	}
+	xp = 10;
 }
 class Walker extends Enemy{
 	color = "#faa";
@@ -30,6 +31,7 @@ class Walker extends Enemy{
 		}else this.dis += this.acl;
 		this.isMoving = true;
 	}
+	xp = 15;
 	image = Player;
 }
 class Stayer extends Enemy{
@@ -41,6 +43,7 @@ class Stayer extends Enemy{
 		velocity.y += sin(this.r) * this.acl;
 		this.isMoving = true;
 	}
+	xp = 20;
 	hitWall(x, y) {
 		var {r, velocity} = this;
 		velocity.x *= x;

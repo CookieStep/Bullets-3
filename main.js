@@ -4,8 +4,10 @@ function main() {
 	for(let bullet of bullets) bullet.update();
 	for(let xp of exp) {
 		xp.update();
-		if(Entity.isTouching(player, xp))
+		if(Entity.isTouching(player, xp) && player.alive) {
 			xp.onHit(player);
+			score += xp.xp;
+		}
 	}
 	for(let a = 0; a < enemies.length; a++) {
 		let enemy = enemies[a];
@@ -59,11 +61,13 @@ function main() {
 	let size = game.height/6, text = `Level ${level + 1}`;
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = "#aaf";
-	ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size/2);
+	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
+	ctx.fillText(`Score: ${round(score)}`, 0, size/2);
 	enemies = enemies.filter((enemy) => enemy.alive);
 	exp = exp.filter((xp) => xp.alive);
     bullets = bullets.filter((bullet) => bullet.alive);
 }
+var score = 0;
 function tip(text, time, color) {
 	Object.assign(tip, {text, time, color});
 	localStorage.tipNum++; tipNum++;
