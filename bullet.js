@@ -28,6 +28,9 @@ class Bullet extends Entity{
         this.maxHp = parent.maxHp;
         --this.time;
     }
+    get alive() {
+        return this.time > 0;
+    }
     static summon(parent, bullet) {
         let rad = bullet.rad;
         let mov = {x: cos(rad), y: sin(rad)};

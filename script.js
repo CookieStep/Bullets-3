@@ -2,6 +2,7 @@ onload = function() {
 	var {body} = document;
 	body.appendChild(canvas);
 	onresize();
+	setupLevels();
 	update();
 };
 onresize = function() {
@@ -35,11 +36,33 @@ function update() {
 	else main();
 	onfocus();
 }
+var keyBind = {
+	up: 87,
+	left: 65,
+	down: 83,
+	right: 68,
+	left2: 37,
+	right2: 39,
+	down2: 40,
+	up2: 38,
+	glide: 16,
+	enter: 13,
+	select: 32
+};
+var bind = [];
+function setupKeybind() {
+	for(let id in keyBind) {
+		bind[keyBind[id]] = id;
+	}
+}
+setupKeybind();
 var keys = {};
 onkeydown = function(pressed) {
-	if(!keys[pressed.key]) keys[pressed.key] = 1;
-	else keys[pressed.key] = 3;
+	let key = bind[pressed.keyCode];
+	if(!keys[key]) keys[key] = 1;
+	else keys[key] = 3;
 }
 onkeyup = function(released) {
-	delete keys[released.key];
+	let key = bind[released.keyCode];
+	delete keys[key];
 }

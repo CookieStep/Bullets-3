@@ -6,42 +6,41 @@ class Player extends Entity{
 	}
 	tick() {
 		var mov = {x: 0, y: 0};
-		if(keys.d) mov.x++;
-		if(keys.a) mov.x--;
-		if(keys.s) mov.y++;
-		if(keys.w) mov.y--;
-		if(keys.d == 1) {
+		if(keys.right) mov.x++;
+		if(keys.left) mov.x--;
+		if(keys.down) mov.y++;
+		if(keys.up) mov.y--;
+		if(keys.right == 1) {
 			mov.x++; keys.d = 2;
 		}
-		if(keys.a == 1) {
+		if(keys.left == 1) {
 			mov.x--; keys.a = 2;
 		}
-		if(keys.s == 1) {
+		if(keys.down == 1) {
 			mov.y++; keys.s = 2;
 		}
-		if(keys.w == 1) {
+		if(keys.up == 1) {
 			mov.y--; keys.w = 2;
 		}
 		if(mov.x || mov.y) {
 			this.move(mov);
-			this.isMoving = true;
 		}
 		mov = {x: 0, y: 0};
-		if(keys.ArrowRight) mov.x++;
-		if(keys.ArrowLeft) mov.x--;
-		if(keys.ArrowDown) mov.y++;
-		if(keys.ArrowUp) mov.y--;
-		if(keys.ArrowRight == 1) {
-			mov.x++; keys.ArrowRight = 2;
+		if(keys.right2) mov.x++;
+		if(keys.left2) mov.x--;
+		if(keys.down2) mov.y++;
+		if(keys.up2) mov.y--;
+		if(keys.right2 == 1) {
+			mov.x++; keys.d = 2;
 		}
-		if(keys.ArrowLeft == 1) {
-			mov.x--; keys.ArrowLeft = 2;
+		if(keys.left2 == 1) {
+			mov.x--; keys.a = 2;
 		}
-		if(keys.ArrowDown == 1) {
-			mov.y++; keys.ArrowDown = 2;
+		if(keys.down2 == 1) {
+			mov.y++; keys.s = 2;
 		}
-		if(keys.ArrowUp == 1) {
-			mov.y--; keys.ArrowUp = 2;
+		if(keys.up2 == 1) {
+			mov.y--; keys.w = 2;
 		}
 		if((mov.x || mov.y) && this.lastShot <= 0) {
 			this.shoot(mov);
@@ -53,6 +52,7 @@ class Player extends Entity{
 		let rad = atan2(mov.y, mov.x);
 		velocity.x += cos(rad) * acl;
 		velocity.y += sin(rad) * acl;
+		this.isMoving = true;
 	}
 	shoot(mov) {
 		let rad = atan2(mov.y, mov.x);
@@ -62,7 +62,7 @@ class Player extends Entity{
 		Bullet.summon(this, new Bullet(rad));
 	}
 	static draw(ctx, s) {
-		ctx.rect(0, 0, s, s, s/3);
+		ctx.rect2(0, 0, s, s, s/3);
 	}
 	static store = {};
 	onHit(attacker) {
@@ -95,7 +95,7 @@ class Player2 extends Player{
 	image = Player2;
 	color = "#5f5";
 }
-class Player3 extends Player2{
+class Player3 extends Player{
 	static draw(ctx, s) {
 		let r = s/3;
 		ctx.moveTo(r, 0);
@@ -120,8 +120,11 @@ class Player3 extends Player2{
 	move(mov) {
 		var {velocity, acl, r} = this
 		this.r += PI/32 * sign(mov.x);
-		velocity.x -= cos(r) * acl * sign(mov.y);
-		velocity.y -= sin(r) * acl * sign(mov.y);
+		if(mov.y) {
+			this.isMoving = true;
+			velocity.x -= cos(r) * acl * sign(mov.y);
+			velocity.y -= sin(r) * acl * sign(mov.y);
+		}
 	}
 	shoot(mov) {
 		let rad = atan2(mov.y, mov.x);
@@ -132,4 +135,45 @@ class Player3 extends Player2{
 	static store = {};
 	image = Player3;
 	color = "#f55";
+}
+class Player4 extends Player{
+	static draw(ctx, s) {
+		let r = s/2;
+		ctx.moveTo(r, 0);
+		ctx.lineTo(s-r, 0);
+		ctx.quadraticCurveTo(s, 0, s, r);
+		ctx.lineTo(s, s-r);
+		ctx.quadraticCurveTo(s, s, s-r, s);
+		ctx.lineTo(0, s);
+		ctx.lineTo(0, 0);
+		ctx.closePath();
+	}
+	draw() {
+		var {x, y, mx, my, s, r, color, inv, hp, maxHp, r} = this;
+		ctx.save();
+		ctx.translate(mx, my);
+		ctx.rotate(r);
+		ctx.translate(-mx, -my);
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
+	}
+	move(mov) {
+		var {velocity, acl, r} = this
+		this.r += PI/32 * sign(mov.x);
+		if(mov.y) {
+			this.isMoving = true;
+			velocity.x -= cos(r) * acl * sign(mov.y);
+			velocity.y -= sin(r) * acl * sign(mov.y);
+		}
+	}
+	shoot(mov) {
+		let rad = atan2(mov.y, mov.x);
+		this.lastShot = 10;
+		Bullet.summon(this, new Bullet(rad));
+	}
+	r = 0;
+	static store = {};
+	image = Player4;
+	color = "#ff5";
 }

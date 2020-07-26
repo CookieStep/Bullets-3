@@ -1,5 +1,5 @@
 Object.assign(CanvasRenderingContext2D.prototype, {
-	rect(x, y, w, h, r=0){
+	rect2(x, y, w, h, r=0){
 		var v = x + w, b = y + h;
 		this.moveTo(x+r, y);
 		this.lineTo(v-r, y);

@@ -54,6 +54,9 @@ class Entity{
 		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
 		ctx.restore();
 	}
+	get alive() {
+		return this.hp > 0;
+	}
 	get dis() {
 		var {velocity} = this;
 		return distance(velocity.x, velocity.y);

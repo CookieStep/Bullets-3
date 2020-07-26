@@ -4,7 +4,7 @@ function menu() {
 	switch(menu.active) {
 		case "player":
 			let {
-				players=[new Player, new Player2, new Player3],
+				players=[new Player, new Player2, new Player3, new Player4],
 				selected=0,
 				offset=0,
 				moveTo=0
@@ -32,7 +32,7 @@ function menu() {
 				player.mx = (i - selected - offset) * (edge * 3) + game.width/2;
 				player.draw();
 			}
-			let desc = descriptions[selected];
+			let desc = this.descriptions[selected];
 			ctx.font = `${edge/3}px Sans`;
 			for(let i = 0; i < desc.length; i++) {
 				text = desc[i];
@@ -53,22 +53,21 @@ function menu() {
 				offset += 1/n;
 				if(offset > 0) offset = 0;
 			}
-			if(keys.ArrowLeft == 1 || keys.ArrowLeft == 3) {
-				keys.ArrowLeft = 2;
+			if(keys.left2 == 1 || keys.left2 == 3) {
+				keys.left2 = 2;
 				moveTo--;
 				if(moveTo < 0) moveTo++;
 			}
-			if(keys.ArrowRight == 1 || keys.ArrowRight == 3) {
-				keys.ArrowRight = 2;
+			if(keys.right2 == 1 || keys.right2 == 3) {
+				keys.right2 = 2;
 				moveTo++;
 				if(moveTo >= players.length) moveTo--;
 			}
-			if(keys.Enter) {
-				let sel = [Player, Player2, Player3]
+			if(keys.select) {
+				let sel = [Player, Player2, Player3, Player4]
 				player = new sel[selected];
 				player.x = (game.width - player.s)/2;
 				player.y = (game.height - player.s)/2;
-				for(let i = 0; i < 20; i++) Enemy.spawn(new Enemy);
 				this.active = false;
 			}
 			Object.assign(this, {
@@ -80,21 +79,25 @@ function menu() {
 		break;
 	}
 }
-let descriptions = [
-	[
-		"Four-way Movement",
-		"Four-way Shooting"
-	],
-	[
-		"Four-way Movement",
-		"Directional Shooting"
-	],
-	[
-		"Directional Movement",
-		"Directional Shooting"
-	]
-]
 Object.assign(menu, {
 	active: "player",
-	screenLines: false
+	screenLines: false,
+	descriptions: [
+		[
+			"Four-way Movement",
+			"Four-way Shooting"
+		],
+		[
+			"Four-way Movement",
+			"Directional Shooting"
+		],
+		[
+			"Directional Movement",
+			"Directional Shooting"
+		],
+		[
+			"Directional Movement",
+			"Four-way Shooting"
+		]
+	]
 })

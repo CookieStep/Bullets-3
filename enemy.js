@@ -12,12 +12,13 @@ class Enemy extends Entity{
 				x: random(game.width - what.s),
 				y: random(game.height - what.s)
 			});
-			chk = check() || Entity.distance(player, what) < 15;
+			chk = check() || Entity.distance(player, what) < 10;
 			if(chk && i++ > 100) {
 				return;
 			}
 		}while(chk)
 		enemies.push(what)
+		return true;
 	}
 }
 class Walker extends Enemy{
