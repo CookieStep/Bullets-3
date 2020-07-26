@@ -2,6 +2,11 @@ function main() {
 	genLevel(level);
 	if(player.alive) player.update();
 	for(let bullet of bullets) bullet.update();
+	for(let xp of exp) {
+		xp.update();
+		if(Entity.isTouching(player, xp))
+			xp.onHit(player);
+	}
 	for(let a = 0; a < enemies.length; a++) {
 		let enemy = enemies[a];
 		enemy.update();
@@ -35,6 +40,7 @@ function main() {
 					enemy.velocity.y += y/10;
 					enemy2.velocity.y -= y/10;
 				}
+				Wall.play();
 			}
 		}
 	}
@@ -42,14 +48,20 @@ function main() {
 	if(player.alive) player.draw();
 	for(let enemy of enemies) enemy.draw();
 	for(let bullet of bullets) bullet.draw();
+	for(let xp of exp) xp.draw();
 	if(tip.time > 0) {
 		tip.time--;
 		let size = game.height/6, {text} = tip;
-		ctx.font = `${size/2}px Comic Sans`;
+		ctx.font = `${size/2}px Comic Sans MS`;
 		ctx.fillStyle = tip.color;
 		ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size * 2);
 	}
+	let size = game.height/6, text = `Level ${level + 1}`;
+	ctx.font = `${size/2}px Arial`;
+	ctx.fillStyle = "#aaf";
+	ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size/2);
 	enemies = enemies.filter((enemy) => enemy.alive);
+	exp = exp.filter((xp) => xp.alive);
     bullets = bullets.filter((bullet) => bullet.alive);
 }
 function tip(text, time, color) {

@@ -48,5 +48,6 @@ class Stayer extends Enemy{
 		var dir = {x: cos(r), y: sin(r)};
 		dir.x *= x; dir.y *= y;
 		this.r = atan2(dir.y, dir.x);
+		Wall.play();
 	}
 }

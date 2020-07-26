@@ -8,7 +8,7 @@ class Entity{
 		var {velocity, spd} = this;
 		if(this.dis > spd) this.dis = spd;
 		this.x += velocity.x; this.y += velocity.y;
-		if(!this.isMoving) this.dis *= 0.95;
+		if(!this.isMoving) this.dis *= 0.9;
 		else this.isMoving = false;
 	}
 	screenlock() {
@@ -34,6 +34,7 @@ class Entity{
 		var {velocity} = this;
 		velocity.x *= x;
 		velocity.y *= y;
+		Wall.play();
 	}
 	update() {
 		if(this.lastShot > 0) this.lastShot--;
@@ -88,7 +89,13 @@ class Entity{
 		this.x = mx - this.s/2;
 	}
 	onHit(attacker) {
-		if(!this.inv) this.hp -= attacker.hit();
+		if(!this.inv) {
+			this.hp -= attacker.hit();
+			if(!this.alive) {
+				Boom.play();
+				xp(this);
+			}
+		}
 	}
 	hit() {
 		return this.atk;
@@ -98,6 +105,7 @@ class Entity{
 	color = "grey"; s = 1;
 	maxHp = 1; inv = 0;
 	regen = 0.01; atk = 1;
+	xp = 10;
 	isMoving = false; inf = [];
 	image = Entity;
 	static isTouching = (a, b) => (
@@ -106,6 +114,7 @@ class Entity{
 		abs(a.my - b.my) < (a.s + b.s)/2
 	);
 	static distance = (a, b) => distance(a.mx, a.my, b.mx, b.my);
+	static radian = (a, b) => atan2(b.my - a.my, b.mx - a.mx);
 	static uid = 0n;
 	static image(hp, maxHp, color, inv) {
 		hp = Math.floor(hp);

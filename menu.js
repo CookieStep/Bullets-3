@@ -86,19 +86,28 @@ Object.assign(menu, {
 	descriptions: [
 		[
 			"Four-way Movement",
-			"Four-way Shooting"
+			"Four-way Shooting",
+			"",
+			"Can't argue with the classics."
 		],
 		[
 			"Four-way Movement",
-			"Directional Shooting"
+			"Directional Shooting",
+			"",
+			"Close shooting, not recommeded"
 		],
 		[
 			"Directional Movement",
-			"Directional Shooting"
+			"Directional Shooting",
+			"",
+			"Totally not stolen from another game"
 		],
 		[
 			"Directional Movement",
-			"Four-way Shooting"
+			"Four-way Shooting",
+			"",
+			"I don't know why I added this.",
+			"But I don't regret it"
 		]
 	]
 });
@@ -108,9 +117,7 @@ function bindMenu() {
 	ctx.font = `${edge/4}px Sans`;
 	clear();
 	var {selected} = bindMenu;
-	for(let key in keyBind) {
-		i++;
-	}
+	for(let key in keyBind) ++i;
 	let m = i;
 	i = 0;
 	ctx.beginPath();

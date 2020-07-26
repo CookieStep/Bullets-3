@@ -87,6 +87,7 @@ onkeydown = function(pressed) {
 		pressed.preventDefault();
 		resetKeybind();
 		setupKeybind();
+		localStorage.keyBind = JSON.stringify(keyBind);
 	}
 	if(bindMenu.active && bindMenu.selected) {
 		bindMenu.add = pressed.keyCode;

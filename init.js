@@ -10,5 +10,6 @@ const
 	{assign} = Object;
 var player,
 	enemies = [],
+	exp = [],
 	bullets = [],
 	level = 0;

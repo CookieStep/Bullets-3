@@ -60,6 +60,7 @@ class Player extends Entity{
 		// let n = PI/64;
 		// rad += random(n) - n/2;
 		this.lastShot = 10;
+		Shoot.play();
 		Bullet.summon(this, new Bullet(rad));
 	}
 	static draw(ctx, s) {
@@ -69,6 +70,9 @@ class Player extends Entity{
 	onHit(attacker) {
 		if(!this.inv) {
 			this.hp -= attacker.hit();
+			if(!this.alive) {
+				Death.play();
+			}
 			this.inv = 50;
 		}
 	}
@@ -80,6 +84,7 @@ class Player2 extends Player{
 		let rad = atan2(mov.y, mov.x);
 		this.lastShot = 10;
 		Bullet.summon(this, new Bullet(rad + this.rad + PI/2));
+		Shoot.play();
 	}
 	static draw(ctx, s) {
 		let r = s/3;
@@ -131,6 +136,7 @@ class Player3 extends Player{
 		let rad = atan2(mov.y, mov.x);
 		this.lastShot = 10;
 		Bullet.summon(this, new Bullet(rad + this.r + PI/2));
+		Shoot.play();
 	}
 	r = 0;
 	static store = {};
@@ -172,6 +178,7 @@ class Player4 extends Player{
 		let rad = atan2(mov.y, mov.x);
 		this.lastShot = 10;
 		Bullet.summon(this, new Bullet(rad));
+		Shoot.play();
 	}
 	r = 0;
 	static store = {};
