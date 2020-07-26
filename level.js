@@ -8,7 +8,8 @@ function setupLevels() {
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
-				tip("Shoot the white ones", 200, "#fff");
+				if(tipNum < 1)
+					tip("Shoot the white boxes", 100, "#fff");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy) && this.summon) this.summon--}
 			else if(enemies.length == 0) {
@@ -20,7 +21,8 @@ function setupLevels() {
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
-				tip("Easy enough right?", 200, "#fff");
+				if(tipNum < 2)
+					tip("Easy enough right?", 100, "#fff");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy) && this.summon) this.summon--}
 			else if(enemies.length == 0) {
@@ -32,7 +34,8 @@ function setupLevels() {
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
-				tip("Your not the only one able to move.", 200, "#faa");
+				if(tipNum < 3)
+					tip("Your not the only one able to move.", 100, "#faa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Walker) && this.summon) this.summon--}
 			else if(enemies.length == 0) {
@@ -45,7 +48,8 @@ function setupLevels() {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
-				tip("Beware, reds can bounce off whites", 200, "#faa");
+				if(tipNum < 4)
+					tip("Beware, reds can bounce off other boxes", 100, "#faa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy) && this.summon) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker) && this.summon2) this.summon2--}
@@ -59,7 +63,8 @@ function setupLevels() {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
-				tip("Watch out, these ones are determined", 200, "#afa");
+				if(tipNum < 5)
+					tip("Watch out, these boxes are determined", 200, "#afa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Stayer) && this.summon) this.summon--}
 			if(this.summon2 > 0) {if(Enemy.spawn(new Walker) && this.summon2) this.summon2--}

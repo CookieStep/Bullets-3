@@ -45,7 +45,7 @@ function main() {
 	if(tip.time > 0) {
 		tip.time--;
 		let size = game.height/6, {text} = tip;
-		ctx.font = `${size/2}px Sans`;
+		ctx.font = `${size/2}px Comic Sans`;
 		ctx.fillStyle = tip.color;
 		ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size * 2);
 	}
@@ -54,4 +54,5 @@ function main() {
 }
 function tip(text, time, color) {
 	Object.assign(tip, {text, time, color});
+	localStorage.tipNum++; tipNum++;
 }

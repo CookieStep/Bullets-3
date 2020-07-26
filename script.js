@@ -2,9 +2,19 @@ onload = function() {
 	var {body} = document;
 	body.appendChild(canvas);
 	onresize();
+	if(localStorage.tipNum) localStorage.tipNum = Number(localStorage.tipNum);
+	else localStorage.tipNum = 0;
+	if(localStorage.keyBind) keyBind = JSON.parse(localStorage.keyBind);
+	else{
+		resetKeybind();
+		localStorage.keyBind = JSON.stringify(keyBind);
+	}
+	setupKeybind();
+	({tipNum} = localStorage);
 	setupLevels();
 	update();
 };
+var tipNum;
 onresize = function() {
 	Object.assign(canvas, {
 		width: innerWidth,
@@ -14,6 +24,10 @@ onresize = function() {
 }
 onblur = function() {
 	cancelAnimationFrame(request);
+}
+var mouse = {x: 0, y: 0}
+onmousedown = function(mouse) {
+	window.mouse = {x: mouse.x/scale, y: mouse.y/scale, click: true};
 }
 onfocus = function() {request = requestAnimationFrame(update);}
 var game = {
@@ -32,35 +46,54 @@ function update() {
 		onfocus();
 		return;
 	}else last = now;
-	if(menu.active) menu.call(menu);
-	else main();
+	if(bindMenu.active) bindMenu();
+	else{
+		if(menu.active) menu.call(menu);
+		else main();
+	}
 	onfocus();
 }
-var keyBind = {
-	up: 87,
-	left: 65,
-	down: 83,
-	right: 68,
-	left2: 37,
-	right2: 39,
-	down2: 40,
-	up2: 38,
-	glide: 16,
-	enter: 13,
-	select: 32
-};
+var keyBind;
 var bind = [];
+function resetKeybind() {
+	keyBind = {
+		up: 87,
+		left: 65,
+		down: 83,
+		right: 68,
+		left2: 37,
+		right2: 39,
+		down2: 40,
+		up2: 38,
+		glide: 16,
+		enter: 13,
+		select: 32
+	};
+}
 function setupKeybind() {
+	bind = [];
 	for(let id in keyBind) {
 		bind[keyBind[id]] = id;
 	}
 }
-setupKeybind();
 var keys = {};
 onkeydown = function(pressed) {
 	let key = bind[pressed.keyCode];
-	if(!keys[key]) keys[key] = 1;
-	else keys[key] = 3;
+	if(pressed.key == "F1") {
+		pressed.preventDefault();
+		bindMenu.active = !bindMenu.active;
+	}
+	if(pressed.key == "F2") {
+		pressed.preventDefault();
+		resetKeybind();
+		setupKeybind();
+	}
+	if(bindMenu.active && bindMenu.selected) {
+		bindMenu.add = pressed.keyCode;
+	}else{
+		if(!keys[key]) keys[key] = 1;
+		else keys[key] = 3;
+	}
 }
 onkeyup = function(released) {
 	let key = bind[released.keyCode];

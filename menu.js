@@ -77,6 +77,7 @@ function menu() {
 				moveTo
 			});
 		break;
+
 	}
 }
 Object.assign(menu, {
@@ -100,4 +101,44 @@ Object.assign(menu, {
 			"Four-way Shooting"
 		]
 	]
-})
+});
+function bindMenu() {
+	let i = 0;
+	let edge = game.height/6;
+	ctx.font = `${edge/4}px Sans`;
+	clear();
+	var {selected} = bindMenu;
+	for(let key in keyBind) {
+		i++;
+	}
+	let m = i;
+	i = 0;
+	ctx.beginPath();
+	ctx.fillStyle = "#aaf";
+	ctx.rect2(game.width* 2/5, 0, game.width/5, edge/3 * (m + 1), game.width/10);
+	if(mouse.click) {
+		selected = (mouse.y + edge/6) * 3/edge;
+		selected = Math.floor(selected);
+		if(selected >= m + 1 || selected < 1) selected = undefined;
+		mouse.click = false;
+	}
+	ctx.fill();
+	for(let key in keyBind) {
+		i++;
+		if(i == selected && bindMenu.add) {
+			keyBind[key] = bindMenu.add;
+			delete bindMenu.add;
+			setupKeybind();
+			localStorage.keyBind = JSON.stringify(keyBind);
+		}
+		text = `${key[0].toUpperCase() + key.slice(1)} : ${keyBind[key]}`;
+		size = ctx.measureText(text);
+		ctx.fillStyle = i == selected? "#000": "#77f";
+		ctx.beginPath();
+		ctx.rect2((game.width - size.width - edge/4)/2, edge/3 * i - edge/6, size.width + edge/4, edge/4, edge/8);
+		ctx.fill();
+		ctx.fillStyle = "#00f";
+		ctx.fillText(text, (game.width - size.width)/2, edge/3 * (i + 0.05));
+	}
+	bindMenu.selected = selected;
+}
