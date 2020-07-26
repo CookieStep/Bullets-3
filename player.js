@@ -5,8 +5,7 @@ class Player extends Entity{
 		this.inv = 50;
 	}
 	tick() {
-		var {velocity, acl} = this,
-			mov = {x: 0, y: 0};
+		var mov = {x: 0, y: 0};
 		if(keys.d) mov.x++;
 		if(keys.a) mov.x--;
 		if(keys.s) mov.y++;
@@ -24,9 +23,7 @@ class Player extends Entity{
 			mov.y--; keys.w = 2;
 		}
 		if(mov.x || mov.y) {
-			let rad = atan2(mov.y, mov.x);
-			velocity.x += cos(rad) * acl;
-			velocity.y += sin(rad) * acl;
+			this.move(mov);
 			this.isMoving = true;
 		}
 		mov = {x: 0, y: 0};
@@ -51,6 +48,12 @@ class Player extends Entity{
 		}
 	}
 	image = Player;
+	move(mov) {
+		var {velocity, acl} = this;
+		let rad = atan2(mov.y, mov.x);
+		velocity.x += cos(rad) * acl;
+		velocity.y += sin(rad) * acl;
+	}
 	shoot(mov) {
 		let rad = atan2(mov.y, mov.x);
 		// let n = PI/64;
@@ -91,4 +94,42 @@ class Player2 extends Player{
 	static store = {};
 	image = Player2;
 	color = "#5f5";
+}
+class Player3 extends Player2{
+	static draw(ctx, s) {
+		let r = s/3;
+		ctx.moveTo(r, 0);
+		ctx.lineTo(s-r, 0);
+		ctx.lineTo(s, r);
+		ctx.lineTo(s, s-r);
+		ctx.lineTo(s-r, s);
+		ctx.lineTo(0, s);
+		ctx.lineTo(0, 0);
+		ctx.closePath();
+	}
+	draw() {
+		var {x, y, mx, my, s, r, color, inv, hp, maxHp, r} = this;
+		ctx.save();
+		ctx.translate(mx, my);
+		ctx.rotate(r);
+		ctx.translate(-mx, -my);
+		var {x, y, s, color, hp, maxHp, inv} = this;
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.restore();
+	}
+	move(mov) {
+		var {velocity, acl, r} = this
+		this.r += PI/32 * sign(mov.x);
+		velocity.x -= cos(r) * acl * sign(mov.y);
+		velocity.y -= sin(r) * acl * sign(mov.y);
+	}
+	shoot(mov) {
+		let rad = atan2(mov.y, mov.x);
+		this.lastShot = 10;
+		Bullet.summon(this, new Bullet(rad + this.r + PI/2));
+	}
+	r = 0;
+	static store = {};
+	image = Player3;
+	color = "#f55";
 }

@@ -31,7 +31,7 @@ function update() {
 		onfocus();
 		return;
 	}else last = now;
-	if(menu.active) menu();
+	if(menu.active) menu.call(menu);
 	else main();
 	onfocus();
 }
