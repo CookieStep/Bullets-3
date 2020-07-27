@@ -6,6 +6,7 @@ function main() {
 		xp.update();
 		if(Entity.isTouching(player, xp) && player.alive) {
 			xp.onHit(player);
+			if((score % 100) + xp.xp > 100) lives++;
 			score += xp.xp;
 		}
 	}
@@ -63,6 +64,15 @@ function main() {
 	ctx.fillStyle = "#aaf";
 	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
 	ctx.fillText(`Score: ${round(score)}`, 0, size/2);
+	let x = (game.width - lives)/2;
+	ctx.beginPath();
+	ctx.strokeStyle = player.color;
+	ctx.lineWidth = 1/10;
+	for(var i = 0; i < lives; i++) {
+		ctx.rect2(x + i, 0, 1, 1, 1/3);
+	}
+	ctx.stroke();
+	ctx.beginPath();
 	enemies = enemies.filter((enemy) => enemy.alive);
 	exp = exp.filter((xp) => xp.alive);
     bullets = bullets.filter((bullet) => bullet.alive);

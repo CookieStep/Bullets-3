@@ -12,4 +12,5 @@ var player,
 	enemies = [],
 	exp = [],
 	bullets = [],
-	level = 0;
+	level = 0,
+	lives = 3;

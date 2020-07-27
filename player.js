@@ -72,6 +72,13 @@ class Player extends Entity{
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Death.play();
+				if(lives) {
+					lives--;
+					this.inv = 50;
+					this.hp = this.maxHp;
+					this.x = (game.width - player.s)/2;
+					this.y = (game.height - player.s)/2;
+				}
 			}
 			this.inv = 50;
 		}
