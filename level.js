@@ -107,6 +107,17 @@ function setupLevels() {
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller) && this.summon) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Stayer) && this.summon2) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 10;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Waller) && this.summon) this.summon--}
 		}
 	]
 }

@@ -31,6 +31,12 @@ let Boom = new Sound(
     {src: "Music/Boom.wav", type : "audio/wav"},
     {src: "Music/Boom3.wav", type : "audio/wav"}
 )
+let Spawn = new Sound(
+    {volume: 0.5},
+    {src: "Music/Spawn.wav", type : "audio/wav"},
+    {src: "Music/Spawn2.wav", type : "audio/wav"},
+    {src: "Music/Spawn3.wav", type : "audio/wav"}
+)
 let Death = new Sound(
     {volume: 0.5},
     {src: "Music/Death.wav", type : "audio/wav"}

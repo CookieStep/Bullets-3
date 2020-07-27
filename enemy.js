@@ -1,7 +1,6 @@
 class Enemy extends Entity{
 	constructor() {
 		super();
-		this.spd *= 3/4;
 	}
 	color = "#fff";
 	static spawn(what) {
@@ -22,6 +21,7 @@ class Enemy extends Entity{
 			}
 		}while(chk)
 		enemies.push(what)
+		Spawn.play();
 		return true;
 	}
 	xp = 10;
