@@ -64,7 +64,7 @@ class Boss extends Enemy{
 				this.dis = 1e-25;
 				this.rad = this.time * PI/16;
 				this.color = `rgb(255, ${floor(this.time * 1.275)}, 0)`;
-				this.inv = 2;
+				this.inv = this.time;
 				if(this.time) --this.time;
 				else{
 					++this.phase;
@@ -118,7 +118,14 @@ class Boss extends Enemy{
 				x = game.width * 7/8; y = game.height/8; r = atan2(y - this.my, x - this.mx);
 				this.velocity.x += cos(r) * this.acl;
 				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 3) ++this.phase;
+				if(distance(this.mx, this.my, x, y) < 3) {
+					++this.phase;
+					let enemy = new Minion;
+					let s = (this.s - enemy.s)/2;
+					enemy.x = this.x + s;
+					enemy.y = this.y + s;
+					enemies2.push(enemy);
+				}
 			break;
 			case 10:
 				x = game.width * 7/8; y = game.height * 7/8; r = atan2(y - this.my, x - this.mx);
@@ -137,7 +144,14 @@ class Boss extends Enemy{
 				x = game.width/8; y = game.height * 7/8; r = atan2(y - this.my, x - this.mx);
 				this.velocity.x += cos(r) * this.acl;
 				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 3) this.phase = 8;
+				if(distance(this.mx, this.my, x, y) < 3) {
+					this.phase = 8;
+					let enemy = new Minion;
+					let s = (this.s - enemy.s)/2;
+					enemy.x = this.x + s;
+					enemy.y = this.y + s;
+					enemies2.push(enemy);
+				}
 			break;
 		}
 		if(this.phase <= 5) {
@@ -182,6 +196,16 @@ class Boss extends Enemy{
 		ctx.globalAlpha = 1;
 		ctx.stroke();
 		return canvas;
+	}
+	onHit(attacker) {
+		if(!this.inv) {
+			this.hp -= attacker.hit();
+			if(attacker.uid == player.uid) this.inv = 10;
+			if(!this.alive) {
+				Boom.play();
+				xp(this);
+			}
+		}
 	}
 	image = Boss;
 	phase = 0;

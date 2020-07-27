@@ -6,7 +6,10 @@ function main() {
 		xp.update();
 		if(Entity.isTouching(player, xp) && player.alive) {
 			xp.onHit(player);
-			if((score % 100) + xp.xp >= 100) lives++;
+			while(score + xp.xp >= ((added + 1) * 100) + (pow(2, added) * 10)) {
+				lives++;
+				added++;
+			}
 			score += xp.xp;
 		}
 	}
