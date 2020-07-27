@@ -6,11 +6,10 @@ function main() {
 		xp.update();
 		if(Entity.isTouching(player, xp) && player.alive) {
 			xp.onHit(player);
-			while(score + xp.xp >= ((added + 1) * 100) + (pow(2, added) * 10)) {
-				lives++;
-				added++;
+			while(score + xp.xp * multiplier >= ((added + 1) * 100) + (pow(2, added) * 10)) {
+				lives++; added++;
 			}
-			score += xp.xp;
+			score += xp.xp * multiplier;
 		}
 	}
 	for(let a = 0; a < enemies.length; a++) {
@@ -82,7 +81,11 @@ function main() {
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = "#aaf";
 	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
-	ctx.fillText(`Score: ${round(score)}`, 0, size/2);
+	let mult = `x${floor(multiplier * 100)/100}`, m2 = `${floor(multiplier)}`;
+	if(mult.length - m2.length == 1) {
+		mult += ".00"
+	}else if(mult.length - m2.length == 3) mult += "0";
+	ctx.fillText(`Score: ${round(score)} (${mult})`, 0, size/2);
 	let x = (game.width - lives)/2;
 	ctx.beginPath();
 	ctx.strokeStyle = player.color;

@@ -111,7 +111,10 @@ class Boss extends Enemy{
 					let s = (this.s - enemy.s)/2;
 					enemy.x = this.x + s;
 					enemy.y = this.y + s;
-					enemies2.push(enemy);
+					if(this.spawn) {
+						this.spawn--;
+						enemies2.push(enemy);
+					}
 				}
 			break;
 			case 9:
@@ -124,7 +127,10 @@ class Boss extends Enemy{
 					let s = (this.s - enemy.s)/2;
 					enemy.x = this.x + s;
 					enemy.y = this.y + s;
-					enemies2.push(enemy);
+					if(this.spawn) {
+						this.spawn--;
+						enemies2.push(enemy);
+					}
 				}
 			break;
 			case 10:
@@ -137,7 +143,10 @@ class Boss extends Enemy{
 					let s = (this.s - enemy.s)/2;
 					enemy.x = this.x + s;
 					enemy.y = this.y + s;
-					enemies2.push(enemy);
+					if(this.spawn) {
+						this.spawn--;
+						enemies2.push(enemy);
+					}
 				}
 			break;
 			case 11:
@@ -150,7 +159,10 @@ class Boss extends Enemy{
 					let s = (this.s - enemy.s)/2;
 					enemy.x = this.x + s;
 					enemy.y = this.y + s;
-					enemies2.push(enemy);
+					if(this.spawn) {
+						this.spawn--;
+						enemies2.push(enemy);
+					}
 				}
 			break;
 		}
@@ -160,8 +172,12 @@ class Boss extends Enemy{
 				this.time = 100;
 			}
 		}
-		if(enemies2.length > 10) enemies2.pop();
+		if(enemies2.length > 10) {
+			enemies2.pop();
+			this.spawn++;
+		}
 	}
+	spawn = 20;
 	static store = {};
 	static draw(ctx, s) {
 		let r = s/3;

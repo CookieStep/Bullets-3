@@ -15,4 +15,5 @@ var player,
 	bullets = [],
 	level = 0,
 	added = 0,
+	multiplier = 1,
 	lives = 3;

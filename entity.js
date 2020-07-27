@@ -89,10 +89,11 @@ class Entity{
 		this.x = mx - this.s/2;
 	}
 	onHit(attacker) {
-		if(!this.inv) {
+		if(!this.inv && this.alive) {
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Boom.play();
+				multiplier += 0.01;
 				xp(this);
 			}
 		}
@@ -139,9 +140,9 @@ class Entity{
 		ctx.lineWidth = s/10;
 		ctx.fillStyle = color;
 		ctx.strokeStyle = inv? "white": color;
-		ctx.translate(0.1, 0.1);
+		ctx.translate(s/10, s/10);
 		this.draw(ctx, s);
-		ctx.translate(-0.1, -0.1);
+		ctx.translate(-s/10, -s/10);
 		ctx.globalAlpha = hp;
 		ctx.fill();
 		ctx.globalAlpha = 1;

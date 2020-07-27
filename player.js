@@ -72,8 +72,8 @@ class Player extends Entity{
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Death.play();
-				if(lives) {
-					lives--;
+				if(lives && !this.hardcore) {
+					lives--; multiplier = 1;
 					this.inv = 50;
 					this.hp = this.maxHp;
 					this.x = (game.width - player.s)/2;
@@ -132,7 +132,7 @@ class Player3 extends Player{
 	}
 	move(mov) {
 		var {velocity, acl, r} = this
-		this.r += PI/32 * sign(mov.x);
+		this.r += PI/28 * sign(mov.x);
 		if(mov.y) {
 			this.isMoving = true;
 			velocity.x -= cos(r) * acl * sign(mov.y);
@@ -174,7 +174,7 @@ class Player4 extends Player{
 	}
 	move(mov) {
 		var {velocity, acl, r} = this
-		this.r += PI/32 * sign(mov.x);
+		this.r += PI/28 * sign(mov.x);
 		if(mov.y) {
 			this.isMoving = true;
 			velocity.x -= cos(r) * acl * sign(mov.y);
@@ -191,4 +191,76 @@ class Player4 extends Player{
 	static store = {};
 	image = Player4;
 	color = "#ff5";
+}
+class HPlayer extends Player{
+	static draw(ctx, s) {
+		let r = s/2;
+		ctx.moveTo(0, 0);
+		ctx.lineTo(s/2, s/8);
+		ctx.lineTo(s, 0);
+		ctx.lineTo(s * 7/8, s/2);
+		ctx.lineTo(s, s);
+		ctx.lineTo(s/2, s * 7/8);
+		ctx.lineTo(0, s);
+		ctx.lineTo(s/8, s/2);
+		ctx.closePath();
+	}
+	static store = {};
+	image = HPlayer;
+	hardcore = true;
+	color = "#5ff"
+}
+class HPlayer2 extends Player2{
+	static draw(ctx, s) {
+		let r = s/3;
+		ctx.moveTo(0, 0);
+		ctx.lineTo(s/2, s/8);
+		ctx.lineTo(s/2, 0);
+		ctx.lineTo(s-r, 0);
+		ctx.quadraticCurveTo(s, 0, s, r);
+		ctx.lineTo(s, s-r);
+		ctx.quadraticCurveTo(s, s, s-r, s);
+		ctx.lineTo(s/2, s);
+		ctx.lineTo(s/2, s * 7/8);
+		ctx.lineTo(0, s);
+		ctx.closePath();
+	}
+	static store = {};
+	image = HPlayer2;
+	hardcore = true;
+	color = "#f5f"
+}
+class HPlayer3 extends Player3{
+	static draw(ctx, s) {
+		let r = s/3;
+		ctx.moveTo(r, 0);
+		ctx.lineTo(s-r, 0);
+		ctx.lineTo(s, s/2);
+		ctx.lineTo(s-r, s);
+		ctx.lineTo(0, s);
+		ctx.lineTo(0, 0);
+		ctx.closePath();
+	}
+	static store = {};
+	image = HPlayer3;
+	hardcore = true;
+	color = "#aaa"
+}
+class HPlayer4 extends Player4{
+	static draw(ctx, s) {
+		let r = s/2;
+		ctx.moveTo(0, 0);
+		ctx.lineTo(s/2, s/8);
+		ctx.lineTo(s-r, 0);
+		ctx.quadraticCurveTo(s, 0, s, r);
+		ctx.lineTo(s, s-r);
+		ctx.quadraticCurveTo(s, s, s-r, s);
+		ctx.lineTo(s/2, s * 7/8);
+		ctx.lineTo(0, s);
+		ctx.closePath();
+	}
+	static store = {};
+	image = HPlayer4;
+	hardcore = true;
+	color = "#fff"
 }

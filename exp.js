@@ -1,11 +1,14 @@
 class Exp extends Entity{
     tick() {
         this.r += this.rot;
-        if(player.alive && Entity.distance(player, this) < 2.5) {
+        if(player.alive && Entity.distance(player, this) < 5) {
             var {velocity} = this;
+            let dis = (Entity.distance(this, player) - (this.s + player.s)/2)/5;
+            dis = 1 - dis;
             let r = Entity.radian(this, player);
-            velocity.x += cos(r) * this.acl;
-            velocity.y += sin(r) * this.acl;
+            velocity.x += cos(r) * this.acl * dis;
+            velocity.y += sin(r) * this.acl * dis;
+            this.isMoving = true;
         }
     }
 	draw() {
@@ -17,7 +20,7 @@ class Exp extends Entity{
 		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
 		ctx.restore();
     }
-    onHit(what) {
+    onHit() {
         this.hp = 0;
         Xp.play();
     }

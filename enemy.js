@@ -64,8 +64,8 @@ class Stayer extends Enemy{
 	r = random(PI * 2);
 	tick() {
 		var {velocity} = this;
-		velocity.x += cos(this.r) * this.spd;
-		velocity.y += sin(this.r) * this.spd;
+		velocity.x += cos(this.r) * this.acl;
+		velocity.y += sin(this.r) * this.acl;
 		this.isMoving = true;
 	}
 	xp = 20;

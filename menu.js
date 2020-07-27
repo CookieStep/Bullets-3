@@ -4,7 +4,7 @@ function menu() {
 	switch(menu.active) {
 		case "player":
 			let {
-				players=[new Player, new Player2, new Player3, new Player4],
+				players=[new Player, new Player2, new Player3, new Player4, new HPlayer, new HPlayer2, new HPlayer3, new HPlayer4],
 				selected=0,
 				offset=0,
 				moveTo=0
@@ -38,7 +38,7 @@ function menu() {
 				text = desc[i];
 				size = ctx.measureText(text);
 				ctx.fillStyle = players[selected].color;
-				ctx.fillText(text, (game.width - size.width)/2, edge/3 * (i + 13));
+				ctx.fillText(text, (game.width - size.width)/2, edge/3 * (i + 12 - (i == 0? 6: 0)));
 			}
 			let n = 10;
 			if(moveTo != selected) {
@@ -64,7 +64,7 @@ function menu() {
 				if(moveTo >= players.length) moveTo--;
 			}
 			if(keys.select) {
-				let sel = [Player, Player2, Player3, Player4]
+				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4]
 				player = new sel[selected];
 				player.x = (game.width - player.s)/2;
 				player.y = (game.height - player.s)/2;
@@ -85,29 +85,61 @@ Object.assign(menu, {
 	screenLines: false,
 	descriptions: [
 		[
+			"Softcore",
 			"Four-way Movement",
 			"Four-way Shooting",
 			"",
 			"Can't argue with the classics."
 		],
 		[
+			"Softcore",
 			"Four-way Movement",
 			"Directional Shooting",
 			"",
-			"Close shooting, not recommeded"
+			"Close shooting. not recommeded."
 		],
 		[
+			"Softcore",
 			"Directional Movement",
 			"Directional Shooting",
 			"",
-			"Totally not stolen from another game"
+			"Totally not stolen from another game."
 		],
 		[
+			"Softcore",
 			"Directional Movement",
 			"Four-way Shooting",
 			"",
-			"I don't know why I added this.",
-			"But I don't regret it"
+			"I don't know why I added this...",
+			"But I don't regret it."
+		],
+		[
+			"HARDCORE",
+			"Four-way Movement",
+			"Four-way Shooting",
+			"",
+			"Remain. Calm."
+		],
+		[
+			"HARDCORE",
+			"Four-way Movement",
+			"Directional Shooting",
+			"",
+			"Using this ship. Not recommended."
+		],
+		[
+			"HARDCORE",
+			"Directional Movement",
+			"Directional Shooting",
+			"",
+			"Will you be the one?"
+		],
+		[
+			"HARDCORE",
+			"Directional Movement",
+			"Four-way Shooting",
+			"",
+			"Here we go again."
 		]
 	]
 });
