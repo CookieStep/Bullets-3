@@ -93,7 +93,7 @@ class Entity{
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Boom.play();
-				multiplier += 0.01;
+				if(attacker.uid != player.uid) multiplier += this.multiplier;
 				xp(this);
 			}
 		}
@@ -106,7 +106,7 @@ class Entity{
 	color = "grey"; s = 1;
 	maxHp = 1; inv = 0;
 	regen = 0; atk = 1;
-	xp = 0;
+	xp = 0; multiplier = 0.01;
 	isMoving = false; inf = [];
 	image = Entity;
 	static isTouching = (a, b) => (

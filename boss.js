@@ -177,7 +177,7 @@ class Boss extends Enemy{
 			this.spawn++;
 		}
 	}
-	spawn = 20;
+	spawn = 20; multiplier = 1;
 	static store = {};
 	static draw(ctx, s) {
 		let r = s/3;

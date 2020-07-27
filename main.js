@@ -53,8 +53,8 @@ function main() {
 		let enemy = enemies2[a];
 		enemy.update();
 		if(player.alive) if(Entity.isTouching(player, enemy)) {
-			player.onHit(enemy);
 			enemy.onHit(player);
+			player.onHit(enemy);
 		}
 		for(let bullet of bullets) {
 			if(Entity.isTouching(enemy, bullet)) {
@@ -79,7 +79,7 @@ function main() {
 	let size = game.height/6, text = `Level ${level + 1}`;
 	if(level % 10 == 9) text = `Boss ${(level + 1)/10}`;
 	ctx.font = `${size/2}px Arial`;
-	ctx.fillStyle = "#aaf";
+	ctx.fillStyle = player.hardcore? "#fa5": "#aaf";
 	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
 	let mult = `x${floor(multiplier * 100)/100}`, m2 = `${floor(multiplier)}`;
 	if(mult.length - m2.length == 1) {
@@ -90,7 +90,7 @@ function main() {
 	ctx.beginPath();
 	ctx.strokeStyle = player.color;
 	ctx.lineWidth = 1/10;
-	for(var i = 0; i < lives; i++) {
+	for(var i = 0; i < lives && !player.hardcore; i++) {
 		ctx.rect2(x + i, 0, 1, 1, 1/3);
 	}
 	ctx.stroke();
