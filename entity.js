@@ -104,7 +104,7 @@ class Entity{
 	velocity = {x: 0, y: 0};
 	color = "grey"; s = 1;
 	maxHp = 1; inv = 0;
-	regen = 0.01; atk = 1;
+	regen = 0; atk = 1;
 	xp = 0;
 	isMoving = false; inf = [];
 	image = Entity;

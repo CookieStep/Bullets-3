@@ -21,7 +21,7 @@ class Exp extends Entity{
         this.hp = 0;
         Xp.play();
     }
-    color = "#ff0"
+    color = "#ff0";
     rot = random(PI/32);
     r = random(PI * 2);
     friction = 0.99;

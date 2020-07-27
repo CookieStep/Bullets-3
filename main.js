@@ -47,9 +47,24 @@ function main() {
 			}
 		}
 	}
+	for(let a = 0; a < enemies2.length; a++) {
+		let enemy = enemies2[a];
+		enemy.update();
+		if(player.alive) if(Entity.isTouching(player, enemy)) {
+			player.onHit(enemy);
+			enemy.onHit(player);
+		}
+		for(let bullet of bullets) {
+			if(Entity.isTouching(enemy, bullet)) {
+				enemy.onHit(bullet);
+				bullet.onHit(enemy);
+			}
+		}
+	}
 	clear();
 	if(player.alive) player.draw();
 	for(let enemy of enemies) enemy.draw();
+	for(let enemy of enemies2) enemy.draw();
 	for(let bullet of bullets) bullet.draw();
 	for(let xp of exp) xp.draw();
 	if(tip.time > 0) {
@@ -60,6 +75,7 @@ function main() {
 		ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size * 2);
 	}
 	let size = game.height/6, text = `Level ${level + 1}`;
+	if(level % 10 == 9) text = `Boss ${(level + 1)/10}`;
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = "#aaf";
 	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
@@ -74,6 +90,7 @@ function main() {
 	ctx.stroke();
 	ctx.beginPath();
 	enemies = enemies.filter((enemy) => enemy.alive);
+	enemies2 = enemies2.filter((enemy) => enemy.alive);
 	exp = exp.filter((xp) => xp.alive);
     bullets = bullets.filter((bullet) => bullet.alive);
 }
