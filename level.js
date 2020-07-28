@@ -5,6 +5,7 @@ function genLevel(num) {
 function setupLevels() {
 	levels = [
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -18,6 +19,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -31,19 +33,21 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
 				if(tipNum < 3)
 					tip("Your not the only one able to move.", 100, "#faa");
 			};
-			if(this.summon > 0) {if(Enemy.spawn(new Walker)) this.summon--}
+			if(this.summon > 0) {if(Enemy.spawn(new Mover)) this.summon--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -52,13 +56,14 @@ function setupLevels() {
 					tip("Beware, reds can bounce off other boxes", 100, "#faa");
 			}
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy)) this.summon--}
-			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker)) this.summon2--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover)) this.summon2--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -67,13 +72,14 @@ function setupLevels() {
 					tip("Watch out, these boxes are determind", 100, "#afa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Stayer) && this.summon) this.summon--}
-			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker) && this.summon2) this.summon2--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover) && this.summon2) this.summon2--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -87,19 +93,21 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
-			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker)) this.summon2--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover)) this.summon2--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -113,21 +121,27 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level1.play();
 			if(this.summon == undefined) {
 				this.summon = 10;
-				this.time = 50;
+				this.time = 150;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
 			else if(enemies.length == 0) {
+				Level1.stop();
+				Boss1.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Boss1.play();
 			if(!this.summon) {
 				this.time = 100;
 				if(Enemy.spawn2(new Boss)) this.summon = true;
 			}else if(enemies2.length == 0) {
+				Boss1.stop();
+				Level1.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
@@ -151,7 +165,7 @@ function setupLevels() {
 				this.summon2 = 5;
 				this.time = 50;
 			};
-			if(this.summon > 0) {if(Enemy.spawn(new Walker)) this.summon--}
+			if(this.summon > 0) {if(Enemy.spawn(new Mover)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Tracer)) this.summon2--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
@@ -178,7 +192,68 @@ function setupLevels() {
 				this.time = 50;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Swerve)) this.summon--}
-			else if(this.summon2 > 0) {if(Enemy.spawn(new Walker)) this.summon2--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover)) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Bounce)) this.summon--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.summon2 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Swerve)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Bounce)) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Runner)) this.summon--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.summon2 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Tracer)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Bounce)) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.summon2 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Tracer)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Runner)) this.summon2--}
 			else if(enemies.length == 0) {
 				// if(this.time <= 0) level++;
 				// else this.time--;

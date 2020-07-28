@@ -93,7 +93,7 @@ class Entity{
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Boom.play();
-				if(attacker.uid != player.uid) multiplier += this.multiplier;
+				if(attacker.uid != player.uid && !player.inv) multiplier += this.multiplier;
 				xp(this);
 			}
 		}

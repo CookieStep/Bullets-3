@@ -47,7 +47,7 @@ class Enemy extends Entity{
 	}
 	xp = 10;
 }
-class Walker extends Enemy{
+class Mover extends Enemy{
 	color = "#faa";
 	tick() {
 		if(!this.dis) {

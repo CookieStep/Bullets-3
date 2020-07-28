@@ -9,7 +9,7 @@ class Boss extends Enemy{
 				if(distance(this.mx, this.my, x, y) < 3) {
 					for(let i = 0; i < 5; i++) {
 						if(i == 2) continue;
-						let enemy = new Walker;
+						let enemy = new Mover;
 						enemy.dis = enemy.acl;
 						enemy.rad = 0;
 						enemy.mx = this.s
@@ -26,7 +26,7 @@ class Boss extends Enemy{
 				if(distance(this.mx, this.my, x, y) < 3) {
 					for(let i = 0; i < 5; i++) {
 						if(i == 2) continue;
-						let enemy = new Walker;
+						let enemy = new Mover;
 						enemy.dis = enemy.acl;
 						enemy.rad = PI/2;
 						enemy.my = this.s;
@@ -80,7 +80,7 @@ class Boss extends Enemy{
 					--this.time;
 					if(this.time % 25 == 0) {
 						for(let i = 0; i < 2; i++) {
-							let enemy = new Walker;
+							let enemy = new Mover;
 							enemy.dis = enemy.spd;
 							enemy.rad = r + PI * i + PI/2;
 							let rad = enemy.rad;
@@ -214,10 +214,11 @@ class Boss extends Enemy{
 		return canvas;
 	}
 	onHit(attacker) {
-		if(!this.inv) {
+		if(!this.inv && this.alive) {
 			this.hp -= attacker.hit();
 			if(attacker.uid == player.uid) this.inv = 10;
 			if(!this.alive) {
+				if(attacker.uid != player.uid && !player.inv) multiplier += this.multiplier;
 				Boom.play();
 				xp(this);
 			}

@@ -1,6 +1,6 @@
 class Tracer extends Enemy{
 	phase = floor(random(4));
-	image = Player3; xp = 40;
+	image = Player3; xp = 30;
 	color = "#aaf";
 	tick() {
         var x, y, r;
@@ -48,8 +48,46 @@ class Swerve extends Enemy{
         this.bias = bias;
     }
     image = Player2;
+	xp = 30;
+}
+class Bounce extends Stayer{
+	color = "#aff"; time = 100;
+	r = random(PI * 2);
+	image = Player4;
+	tick() {
+		var {velocity} = this;
+		velocity.x += cos(this.r) * this.acl;
+		velocity.y += sin(this.r) * this.acl;
+		if(this.time > 75) this.color = "#aaf";
+		else if(this.time > 50) this.color = "#bfd";
+		else if(this.time > 25) this.color = "#dfb";
+		else this.color = "#ffa"
+		if(this.time > 0) this.time--; 
+		else{
+			this.time = 100;
+			this.r = random(PI * 2);
+		}
+		this.isMoving = true;
+	}
 	xp = 40;
 }
-class Bouncer extends Enemy{
-    
+class Dash extends Mover{
+	tick() {
+		if(!this.dis) {
+			this.dis += this.acl;
+			this.rad = random(PI * 2);
+		}else this.dis += this.acl;
+		if(this.time) {
+			this.time--;
+			this.color = "#555";
+		}else{
+			this.color = "#fff";
+			if(Entity.distance(this, player) < 5) {
+				this.rad = Entity.radian(this, player);
+				this.time = 100;
+			}
+		}
+	}
+	xp = 50;
+	image = Player4;
 }
