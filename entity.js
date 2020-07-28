@@ -13,22 +13,28 @@ class Entity{
 	}
 	screenlock() {
 		var {velocity} = this;
+		let value = false;
 		if(this.x < 0) {
+			value = true;
 			this.x = 0;
 			this.hitWall(-1, 1);
 		}
 		if(this.x > game.width - this.s) {
+			value = true;
 			this.x = game.width - this.s;
 			this.hitWall(-1, 1);
 		}
 		if(this.y < 0) {
+			value = true;
 			this.y = 0;
 			this.hitWall(1, -1);
 		}
 		if(this.y > game.height - this.s) {
+			value = true;
 			this.y = game.height - this.s;
 			this.hitWall(1, -1);
 		}
+		return value;
 	}
 	hitWall(x, y) {
 		var {velocity} = this;
@@ -52,7 +58,7 @@ class Entity{
 		ctx.rotate(rad);
 		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
 	}
 	get alive() {
@@ -109,6 +115,14 @@ class Entity{
 	xp = 0; multiplier = 0.01;
 	isMoving = false; inf = [];
 	image = Entity;
+	moveTo(x, y) {
+		var r = atan2(y - this.my, x - this.mx),
+			dis = distance(this.mx + this.velocity.x, this.my + this.velocity.y, x, y);
+		if(dis > this.acl) dis = this.acl;
+		this.velocity.x += cos(r) * dis;
+		this.velocity.y += sin(r) * dis;
+		return distance(this.mx, this.my, x, y);
+	}
 	static isTouching = (a, b) => (
 		abs(a.mx - b.mx) < (a.s + b.s)/2
 	) && (
@@ -117,19 +131,18 @@ class Entity{
 	static distance = (a, b) => distance(a.mx, a.my, b.mx, b.my);
 	static radian = (a, b) => atan2(b.my - a.my, b.mx - a.mx);
 	static uid = 0n;
-	static image(hp, maxHp, color, inv) {
+	static image(hp, maxHp, color, inv, s) {
 		hp = Math.floor(hp);
 		inv = inv % 10 > 5;
-		var id = `${hp/maxHp} ${inv} ${color}`;
+		var id = `${hp/maxHp} ${inv} ${color} ${s}`;
 		if(!this.store[id]) {
-			this.store[id] = this.create(hp/maxHp, color, inv);
+			this.store[id] = this.create(hp/maxHp, color, inv, s);
 		}
 		return this.store[id];
 	}
-	static create(hp, color, inv) {
+	static create(hp, color, inv, s) {
 		let canvas = document.createElement("canvas"),
 			ctx = canvas.getContext("2d"),
-			s = 1,
 			s2 = ceil(s * scale * 1.2);
 		Object.assign(canvas, {
 			width: s2,

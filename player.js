@@ -127,7 +127,7 @@ class Player3 extends Player{
 		ctx.rotate(r);
 		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
 	}
 	move(mov) {
@@ -169,7 +169,7 @@ class Player4 extends Player{
 		ctx.rotate(r);
 		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
 	}
 	move(mov) {

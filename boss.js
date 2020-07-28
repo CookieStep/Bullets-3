@@ -204,9 +204,9 @@ class Boss extends Enemy{
 		ctx.lineWidth = s/10;
 		ctx.fillStyle = color;
 		ctx.strokeStyle = inv? "white": color;
-		ctx.translate(0.1, 0.1);
+		ctx.translate(s/10, s/10);
 		this.draw(ctx, s);
-		ctx.translate(-0.1, -0.1);
+		ctx.translate(-s/10, -s/10);
 		ctx.globalAlpha = hp;
 		ctx.fill();
 		ctx.globalAlpha = 1;
@@ -221,7 +221,7 @@ class Boss extends Enemy{
 				if(attacker.uid != player.uid && !player.inv) multiplier += this.multiplier;
 				Boom.play();
 				xp(this);
-			}
+			}else Wall.play();
 		}
 	}
 	image = Boss;

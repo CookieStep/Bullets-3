@@ -14,7 +14,7 @@ class Bullet extends Entity{
         ctx.rotate(rad);
 		ctx.translate(-mx, -my);
 		var {x, y, s, color, hp, maxHp, inv} = this;
-		ctx.drawImage(Entity.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(Entity.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
 	}
     onHit() {

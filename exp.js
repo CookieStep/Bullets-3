@@ -17,7 +17,7 @@ class Exp extends Entity{
 		ctx.translate(mx, my);
 		ctx.rotate(r);
 		ctx.translate(-mx, -my);
-		ctx.drawImage(this.image.image(hp, maxHp, color, inv), x, y, s, s);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
     }
     onHit() {

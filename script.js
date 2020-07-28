@@ -25,9 +25,10 @@ onresize = function() {
 }
 onblur = function() {
 	keys = {};
-	Level1.pause();
-	Boss1.pause();
-	Level2.pause();
+	Level_1.pause();
+	Boss_1.pause();
+	Level_2.pause();
+	Boss_2.pause();
 	cancelAnimationFrame(request);
 }
 var mouse = {x: 0, y: 0}

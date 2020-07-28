@@ -94,16 +94,20 @@ let Wall = new Sound(
     {src: "Music/Wall3.wav", type : "audio/wav"},
     {src: "Music/Wall4.wav", type : "audio/wav"}
 )
-let Level1 = new Bgm(
+let Level_1 = new Bgm(
     {volume: 0.5},
     {src: "Music/Level1.ogg", type : "audio/ogg"}
 )
-let Level2 = new Bgm(
+let Level_2 = new Bgm(
     {volume: 1},
     {src: "Music/Level2.ogg", type : "audio/ogg"}
 )
-let Boss1 = new Bgm(
+let Boss_1 = new Bgm(
     {volume: 1},
     {src: "Music/Boss1.ogg", type : "audio/ogg"}
+)
+let Boss_2 = new Bgm(
+    {volume: 1},
+    {src: "Music/Boss2.ogg", type : "audio/ogg"}
 )
 let started = false;
