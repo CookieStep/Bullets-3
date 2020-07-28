@@ -1,5 +1,6 @@
 onload = function() {
 	var {body} = document;
+	document.title = "Bullets 3";
 	body.appendChild(canvas);
 	onresize();
 	if(localStorage.tipNum) localStorage.tipNum = Number(localStorage.tipNum);
@@ -23,6 +24,10 @@ onresize = function() {
 	ctx.scale(scale, scale);
 }
 onblur = function() {
+	keys = {};
+	Level1.pause();
+	Boss1.pause();
+	Level2.pause();
 	cancelAnimationFrame(request);
 }
 var mouse = {x: 0, y: 0}

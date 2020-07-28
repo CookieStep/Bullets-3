@@ -141,12 +141,13 @@ function setupLevels() {
 				if(Enemy.spawn2(new Boss)) this.summon = true;
 			}else if(enemies2.length == 0) {
 				Boss1.stop();
-				Level1.play();
+				Level2.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -160,6 +161,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -173,6 +175,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -186,6 +189,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -199,6 +203,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -210,6 +215,7 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -223,17 +229,19 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
 			};
-			if(this.summon > 0) {if(Enemy.spawn(new Runner)) this.summon--}
+			if(this.summon > 0) {if(Enemy.spawn(new Dash)) this.summon--}
 			else if(enemies.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -247,13 +255,14 @@ function setupLevels() {
 			}
 		},
 		function() {
+			Level2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Tracer)) this.summon--}
-			else if(this.summon2 > 0) {if(Enemy.spawn(new Runner)) this.summon2--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Dash)) this.summon2--}
 			else if(enemies.length == 0) {
 				// if(this.time <= 0) level++;
 				// else this.time--;

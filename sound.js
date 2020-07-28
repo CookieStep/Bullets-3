@@ -44,8 +44,8 @@ class Bgm {
         let {element} = this
         if(!this.isPlaying) {
             element.currentTime = 0;
-            element.play();
         }
+        element.play();
         this.isPlaying = true;
     }
     pause() {
@@ -61,11 +61,11 @@ class Bgm {
     }
 }
 let Shoot = new Sound(
-    {volume: 0.25},
+    {volume: 0.125},
     {src: "Music/Shoot.wav", type : "audio/wav"}
 )
 let Boom = new Sound(
-    {volume: 0.25},
+    {volume: 0.125},
     {src: "Music/Boom.wav", type : "audio/wav"},
     {src: "Music/Boom3.wav", type : "audio/wav"}
 )
@@ -76,12 +76,12 @@ let Spawn = new Sound(
     {src: "Music/Spawn3.wav", type : "audio/wav"}
 )
 let Death = new Sound(
-    {volume: 0.25},
+    {volume: 0.125},
     {src: "Music/Death.wav", type : "audio/wav"}
 )
 Death.element.playbackRate = 2;
 let Xp = new Sound(
-    {volume: 0.25},
+    {volume: 0.125},
     {src: "Music/Xp.wav", type : "audio/wav"},
     {src: "Music/Xp3.wav", type : "audio/wav"},
     {src: "Music/Xp4.wav", type : "audio/wav"},
@@ -95,8 +95,12 @@ let Wall = new Sound(
     {src: "Music/Wall4.wav", type : "audio/wav"}
 )
 let Level1 = new Bgm(
-    {volume: 1},
+    {volume: 0.5},
     {src: "Music/Level1.ogg", type : "audio/ogg"}
+)
+let Level2 = new Bgm(
+    {volume: 1},
+    {src: "Music/Level2.ogg", type : "audio/ogg"}
 )
 let Boss1 = new Bgm(
     {volume: 1},

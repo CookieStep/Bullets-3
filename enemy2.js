@@ -58,10 +58,10 @@ class Bounce extends Stayer{
 		var {velocity} = this;
 		velocity.x += cos(this.r) * this.acl;
 		velocity.y += sin(this.r) * this.acl;
-		if(this.time > 75) this.color = "#aaf";
-		else if(this.time > 50) this.color = "#bfd";
-		else if(this.time > 25) this.color = "#dfb";
-		else this.color = "#ffa"
+		if(this.time > 75) this.color = "#00f";
+		else if(this.time > 50) this.color = "#55d";
+		else if(this.time > 25) this.color = "#aab";
+		else this.color = "#ffa";
 		if(this.time > 0) this.time--; 
 		else{
 			this.time = 100;
