@@ -5,7 +5,7 @@ function genLevel(num) {
 function setupLevels() {
 	levels = [
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -19,7 +19,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -33,7 +33,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -47,7 +47,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -63,7 +63,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -79,7 +79,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -93,7 +93,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -107,7 +107,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -121,33 +121,33 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level1.play();
+			Level_1.play();
 			if(this.summon == undefined) {
 				this.summon = 10;
 				this.time = 150;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
 			else if(enemies.length == 0) {
-				Level1.stop();
-				Boss1.play();
+				Level_1.stop();
+				Boss_1.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
-			Boss1.play();
+			Boss_1.play();
 			if(!this.summon) {
 				this.time = 100;
 				if(Enemy.spawn2(new Boss)) this.summon = true;
 			}else if(enemies2.length == 0) {
-				Boss1.stop();
-				Level2.play();
+				Boss_1.stop();
+				Level_2.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -161,7 +161,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -175,7 +175,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -189,7 +189,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -203,7 +203,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -215,7 +215,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -229,7 +229,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
@@ -241,7 +241,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -255,7 +255,7 @@ function setupLevels() {
 			}
 		},
 		function() {
-			Level2.play();
+			Level_2.play();
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.summon2 = 5;
@@ -264,6 +264,20 @@ function setupLevels() {
 			if(this.summon > 0) {if(Enemy.spawn(new Tracer)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Dash)) this.summon2--}
 			else if(enemies.length == 0) {
+				Level_2.stop();
+				Boss_2.play();
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Boss_2.play();
+			if(!this.summon) {
+				this.time = 100;
+				if(Enemy.spawn2(new Boss2)) this.summon = true;
+			}else if(enemies2.length == 0) {
+				Boss_2.stop();
+				Level_2.play();
 				// if(this.time <= 0) level++;
 				// else this.time--;
 			}
