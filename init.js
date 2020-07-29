@@ -13,7 +13,7 @@ var player,
 	enemies2 = [],
 	exp = [],
 	bullets = [],
-	level = 10,
+	level = 0,
 	added = 0,
 	multiplier = 1,
 	lives = 3;
