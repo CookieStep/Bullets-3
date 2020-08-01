@@ -75,10 +75,12 @@ class Player extends Entity{
 				if(lives && !this.hardcore) {
 					lives--; multiplier = 1;
 					this.inv = 50;
+					this.velocity = {x: 0, y: 0};
 					this.hp = this.maxHp;
 					this.x = (game.width - player.s)/2;
 					this.y = (game.height - player.s)/2;
-				}
+				}else
+					display(["Press the 'Select' key to retry.", "This will reset your score!"], 100, "red");
 			}
 			this.inv = 50;
 		}
