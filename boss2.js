@@ -5,11 +5,11 @@ class Boss2 extends Boss{
 				this.color = "#a55";
 				if(this.moveTo(game.width/2, this.s) < 0.1) {
 					this.phase++;
-					this.time = 50;
+					this.time = 75;
 				}
 			break;
 			case 1:
-				if(this.time) {
+				if(this.time > 50) {
 					var off = random(PI * 2);
 					if(this.time % 5 == 0) {
 						for(let i = 0; i < 4; i++) {
@@ -22,10 +22,12 @@ class Boss2 extends Boss{
 						}
 					}
 					this.time--;
-				}else{
+				}else if(this.time) {
+					this.color = "#a5a";
+					this.time--;
+				} else{
 					this.phase++;
 					this.time = 100;
-					this.color = "#a5a"
 					let a = floor(random(3)) + 1;
 					for(let i = 0; i < 5; i++) {
 						if(i == a) continue;
@@ -66,11 +68,11 @@ class Boss2 extends Boss{
 			case 4:
 				if(this.moveTo(player.mx, player.my) < 10) {
 					this.phase++;
-					this.time = 100;
+					this.time = 150;
 				}
 			break;
 			case 5:
-				if(this.time) {
+				if(this.time > 50) {
 					var off = Entity.radian(this, player);
 					if(this.time % 15 == 0) {
 						for(let i = 0; i < 4; i++) {
@@ -85,10 +87,12 @@ class Boss2 extends Boss{
 						}
 					}
 					this.time--;
+				}else if(this.time) {
+					this.time--;
+					this.color = "#a5a"
 				}else{
 					this.phase++;
 					this.time = 100;
-					this.color = "#a5a"
 					let a = floor(random(3)) + 1;
 					for(let i = 0; i < 5; i++) {
 						if(i == a) continue;
