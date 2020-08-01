@@ -20,11 +20,13 @@ function menu() {
 				ctx.lineTo(game.width, edge * 5);
 				ctx.stroke();
 			}
+			ctx.scale(1/scale, 1/scale);
 			text = "Ship Select";
-			ctx.font = `${edge}px Sans`;
+			ctx.font = `${edge * scale}px Sans`;
 			size = ctx.measureText(text);
 			ctx.fillStyle = "white";
-			ctx.fillText(text, (game.width - size.width)/2, edge);
+			ctx.fillText(text, (canvas.width - size.width)/2, edge * scale);
+			ctx.scale(scale, scale);
 			for(let i = 0; i < players.length; i++) {
 				let player = players[i];
 				player.s = edge;
@@ -32,14 +34,16 @@ function menu() {
 				player.mx = (i - selected - offset) * (edge * 3) + game.width/2;
 				player.draw();
 			}
+			ctx.scale(1/scale, 1/scale);
 			let desc = this.descriptions[selected];
-			ctx.font = `${edge/3}px Sans`;
+			ctx.font = `${edge/3 * scale}px Sans`;
 			for(let i = 0; i < desc.length; i++) {
 				text = desc[i];
 				size = ctx.measureText(text);
 				ctx.fillStyle = players[selected].color;
-				ctx.fillText(text, (game.width - size.width)/2, edge/3 * (i + 12 - (i == 0? 6: 0)));
+				ctx.fillText(text, (canvas.width - size.width)/2, scale * edge/3 * (i + 12 - (i == 0? 6: 0)));
 			}
+			ctx.scale(scale, scale);
 			let n = 10;
 			if(moveTo != selected) {
 				offset += sign(moveTo - selected) * 1/n;
@@ -170,14 +174,17 @@ function bindMenu() {
 			setupKeybind();
 			localStorage.keyBind = JSON.stringify(keyBind);
 		}
+		ctx.font = `${edge/4 * scale}px Sans`;
 		text = `${key[0].toUpperCase() + key.slice(1)} : ${keyBind[key]}`;
 		size = ctx.measureText(text);
 		ctx.fillStyle = i == selected? "#000": "#77f";
 		ctx.beginPath();
-		ctx.rect2((game.width - size.width - edge/4)/2, edge/3 * i - edge/6, size.width + edge/4, edge/4, edge/8);
+		ctx.rect2((game.width - size.width/scale - edge/4)/2, edge/3 * i - edge/6, size.width/scale + edge/4, edge/4, edge/8);
 		ctx.fill();
 		ctx.fillStyle = "#00f";
-		ctx.fillText(text, (game.width - size.width)/2, edge/3 * (i + 0.05));
+		ctx.scale(1/scale, 1/scale);
+		ctx.fillText(text, (canvas.width - size.width)/2, edge/3 * (i + 0.05) * scale);
+		ctx.scale(scale, scale);
 	}
 	bindMenu.selected = selected;
 }

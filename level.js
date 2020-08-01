@@ -278,8 +278,6 @@ function setupLevels() {
 			}else if(enemies2.length == 0) {
 				Boss_2.stop();
 				Level_2.play();
-				// if(this.time <= 0) level++;
-				// else this.time--;
 			}
 		}
 	]

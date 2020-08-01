@@ -20,7 +20,7 @@ function main() {
 			enemy.onHit(player);
 		}
 		for(let bullet of bullets) {
-			if(Entity.isTouching(enemy, bullet)) {
+			if(Entity.isTouching(enemy, bullet) && enemy.alive && bullet.alive) {
 				bullet.onHit(enemy);
 				enemy.onHit(bullet);
 				let enemy2 = bullet;
@@ -57,7 +57,7 @@ function main() {
 			player.onHit(enemy);
 		}
 		for(let bullet of bullets) {
-			if(Entity.isTouching(enemy, bullet)) {
+			if(Entity.isTouching(enemy, bullet) && enemy.alive && bullet.alive) {
 				enemy.onHit(bullet);
 				bullet.onHit(enemy);
 			}
@@ -69,23 +69,25 @@ function main() {
 	for(let enemy of enemies2) enemy.draw();
 	for(let bullet of bullets) bullet.draw();
 	for(let xp of exp) xp.draw();
+	ctx.scale(1/scale, 1/scale);
 	if(tip.time > 0) {
 		tip.time--;
-		let size = game.height/6, {text} = tip;
+		let size = canvas.height/6, {text} = tip;
 		ctx.font = `${size/2}px Comic Sans MS`;
 		ctx.fillStyle = tip.color;
-		ctx.fillText(text, (game.width - ctx.measureText(text).width)/2, size * 2);
+		ctx.fillText(text, (canvas.width - ctx.measureText(text).width)/2, size * 2);
 	}
-	let size = game.height/6, text = `Level ${level + 1}`;
+	let size = canvas.height/6, text = `Level ${level + 1}`;
 	if(level % 10 == 9) text = `Boss ${(level + 1)/10}`;
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = player.hardcore? "#fa5": "#aaf";
-	ctx.fillText(text, (game.width - ctx.measureText(text).width), size/2);
+	ctx.fillText(text, (canvas.width - ctx.measureText(text).width), size/2);
 	let mult = `x${floor(multiplier * 100)/100}`, m2 = `${floor(multiplier)}`;
 	if(mult.length - m2.length == 1) {
 		mult += ".00"
 	}else if(mult.length - m2.length == 3) mult += "0";
 	ctx.fillText(`Score: ${round(score)} (${mult})`, 0, size/2);
+	ctx.scale(scale, scale);
 	let x = (game.width - lives)/2;
 	ctx.beginPath();
 	ctx.strokeStyle = player.color;
