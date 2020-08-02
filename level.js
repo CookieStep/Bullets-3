@@ -10,7 +10,7 @@ function setupLevels() {
 				this.summon = 5;
 				this.time = 50;
 				if(tipNum < 1)
-					tip("Shoot the white boxes", 100, "#fff");
+					tip(["Shoot the white boxes"], 100, "#fff");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy)) this.summon--}
 			else if(enemies.length == 0) {
@@ -24,7 +24,7 @@ function setupLevels() {
 				this.summon = 5;
 				this.time = 50;
 				if(tipNum < 2)
-					tip("Easy enough right?", 100, "#fff");
+					tip(["Easy enough right?"], 100, "#fff");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy) && this.summon) this.summon--}
 			else if(enemies.length == 0) {
@@ -38,7 +38,7 @@ function setupLevels() {
 				this.summon = 5;
 				this.time = 50;
 				if(tipNum < 3)
-					tip("Your not the only one able to move.", 100, "#faa");
+					tip(["Your not the only one able to move."], 100, "#faa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Mover)) this.summon--}
 			else if(enemies.length == 0) {
@@ -53,7 +53,7 @@ function setupLevels() {
 				this.summon2 = 5;
 				this.time = 50;
 				if(tipNum < 4)
-					tip("Beware, reds can bounce off other boxes", 100, "#faa");
+					tip(["Beware, reds can bounce off other boxes"], 100, "#faa");
 			}
 			if(this.summon > 0) {if(Enemy.spawn(new Enemy)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover)) this.summon2--}
@@ -69,7 +69,7 @@ function setupLevels() {
 				this.summon2 = 5;
 				this.time = 50;
 				if(tipNum < 5)
-					tip("Watch out, these boxes are determind", 100, "#afa");
+					tip(["Watch out, these boxes are determind"], 100, "#afa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Stayer) && this.summon) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Mover) && this.summon2) this.summon2--}
@@ -84,7 +84,7 @@ function setupLevels() {
 				this.summon = 5;
 				this.time = 50;
 				if(tipNum < 6)
-					tip("You've been cornered", 100, "#ffa");
+					tip(["You've been cornered"], 100, "#ffa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
 			else if(enemies.length == 0) {

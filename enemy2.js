@@ -1,6 +1,7 @@
 class Tracer extends Enemy{
 	phase = floor(random(4));
 	image = Player3; xp = 30;
+	multiplier = 0.02;
 	color = "#aaf";
 	tick() {
         var x, y, r;
@@ -37,6 +38,7 @@ class Swerve extends Enemy{
 	color = "#faf";
     r = random(PI * 2);
     bias = random(10) - 5;
+	multiplier = 0.02;
 	tick() {
         var {rad, velocity, bias} = this;
         rad += (random(1 - abs(bias/5)) + bias/5 - (1 - abs(bias/5))/2) * PI/6;
@@ -53,6 +55,7 @@ class Swerve extends Enemy{
 class Bounce extends Stayer{
 	color = "#aff"; time = 100;
 	r = random(PI * 2);
+	multiplier = 0.02;
 	image = Player4;
 	tick() {
 		var {velocity} = this;
@@ -89,5 +92,6 @@ class Dash extends Mover{
 		}
 	}
 	xp = 50;
+	multiplier = 0.02;
 	image = Player4;
 }

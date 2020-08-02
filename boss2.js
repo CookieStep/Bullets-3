@@ -130,11 +130,13 @@ class Boss2 extends Boss{
 		}
 	}
 	maxHp = 40;
+	multiplier = 1.5;
 	hp = 40;
 	image = HPlayer;
 	s = 2; color = "#a55";
 }
 class Minion2 extends Mover{
+	multiplier = 0.02;
 	color = "#5aa";
 	time = 13;
 	tick() {
@@ -145,6 +147,7 @@ class Minion2 extends Mover{
 	image = HPlayer;
 }
 class Minion2_2 extends Mover{
+	multiplier = 0.02;
 	color = "#a5a";
 	time = 100;
 	maxHp = 2;

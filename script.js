@@ -95,6 +95,20 @@ onkeydown = function(pressed) {
 		setupKeybind();
 		localStorage.keyBind = JSON.stringify(keyBind);
 	}
+	if(pressed.key == "F3") {
+		pressed.preventDefault();
+		enemies = [];
+		enemies2 = [];
+		bullets = [];
+		exp = [];
+		level = 0;
+		added = 0;
+		lives = 3;
+		score = 0;
+		multiplier = 1;
+		menu.active = "player";
+		setupLevels();
+	}
 	if(bindMenu.active && bindMenu.selected) {
 		bindMenu.add = pressed.keyCode;
 	}else{
