@@ -4,7 +4,7 @@ class Tracer extends Enemy{
 	multiplier = 0.02;
 	color = "#aaf";
 	tick() {
-        var x, y,;
+        var x, y;
         let i = 2 * this.s;
 		switch(this.phase) {
 			case 0:
