@@ -4,34 +4,24 @@ class Tracer extends Enemy{
 	multiplier = 0.02;
 	color = "#aaf";
 	tick() {
-        var x, y, r;
-        let i = 2;
+        var x, y,;
+        let i = 2 * this.s;
 		switch(this.phase) {
 			case 0:
-				x = this.s * i; y = this.s * i; r = atan2(y - this.my, x - this.mx);
-				this.velocity.x += cos(r) * this.acl;
-				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 1) ++this.phase;
+				x = i; y = i;
 			break;
 			case 1:
-				x = game.width - this.s * i; y = this.s * i; r = atan2(y - this.my, x - this.mx);
-				this.velocity.x += cos(r) * this.acl;
-				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 1) ++this.phase;
+				x = game.width - i; y = i;
 			break;
 			case 2:
-				x = game.width - this.s * i; y = game.height - this.s * i; r = atan2(y - this.my, x - this.mx);
-				this.velocity.x += cos(r) * this.acl;
-				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 1) ++this.phase;
+				x = game.width - i; y = game.height - i;
 			break;
 			case 3:
-				x = this.s * i; y = game.height - this.s * i; r = atan2(y - this.my, x - this.mx);
-				this.velocity.x += cos(r) * this.acl;
-				this.velocity.y += sin(r) * this.acl;
-				if(distance(this.mx, this.my, x, y) < 1) this.phase = 0;
+				x = i; y = game.height - i;
 			break;
 		}
+		if(this.moveTo(x, y) < 1) this.phase++;
+		this.phase %= 4;
 	}
 }
 class Swerve extends Enemy{
@@ -47,20 +37,18 @@ class Swerve extends Enemy{
         if(bias < -5) bias = -5;
         velocity.x += Math.cos(rad) * this.acl;
         velocity.y += Math.sin(rad) * this.acl;
-        this.bias = bias;
+		this.bias = bias;
+		this.isMoving = true;
     }
     image = Player2;
 	xp = 30;
 }
 class Bounce extends Stayer{
 	color = "#aff"; time = 100;
-	r = random(PI * 2);
 	multiplier = 0.02;
 	image = Player4;
 	tick() {
-		var {velocity} = this;
-		velocity.x += cos(this.r) * this.acl;
-		velocity.y += sin(this.r) * this.acl;
+		super.tick();
 		if(this.time > 75) this.color = "#00f";
 		else if(this.time > 50) this.color = "#55d";
 		else if(this.time > 25) this.color = "#aab";
@@ -70,16 +58,12 @@ class Bounce extends Stayer{
 			this.time = 100;
 			this.r = random(PI * 2);
 		}
-		this.isMoving = true;
 	}
 	xp = 40;
 }
 class Dash extends Mover{
 	tick() {
-		if(!this.dis) {
-			this.dis += this.acl;
-			this.rad = random(PI * 2);
-		}else this.dis += this.acl;
+		super.tick();
 		if(this.time) {
 			this.time--;
 			this.color = "#555";

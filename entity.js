@@ -115,6 +115,9 @@ class Entity{
 	xp = 0; multiplier = 0.01;
 	isMoving = false; inf = [];
 	image = Entity;
+	chase(what) {
+		return this.moveTo(what.mx, what.my);
+	}
 	moveTo(x, y) {
 		var r = atan2(y - this.my, x - this.mx),
 			dis = distance(this.mx + this.velocity.x, this.my + this.velocity.y, x, y);

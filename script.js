@@ -33,7 +33,7 @@ onblur = function() {
 }
 var mouse = {x: 0, y: 0}
 onmousedown = function(mouse) {
-	window.mouse = {x: mouse.x/scale, y: mouse.y/scale, click: true};
+	if(bindMenu.active) window.mouse = {x: mouse.x/scale, y: mouse.y/scale, click: true};
 }
 onfocus = function() {request = requestAnimationFrame(update);}
 var game = {
@@ -109,7 +109,7 @@ onkeydown = function(pressed) {
 		menu.active = "player";
 		setupLevels();
 	}
-	if(bindMenu.active && bindMenu.selected) {
+	if(bindMenu.active && bindMenu.selected && !(pressed.key.length == 2 && pressed.key[0] == "F")) {
 		bindMenu.add = pressed.keyCode;
 	}else{
 		if(!keys[key]) keys[key] = 1;

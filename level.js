@@ -128,6 +128,8 @@ function setupLevels() {
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
 			else if(enemies.length == 0) {
+				if(tipNum < 7)
+					tip(["Oh no... Looks like someone isn't", "happy with how far you've come..."], 100, "#f55");
 				Level_1.stop();
 				Boss_1.play();
 				if(this.time <= 0) level++;
@@ -138,6 +140,7 @@ function setupLevels() {
 			Boss_1.play();
 			if(!this.summon) {
 				this.time = 100;
+				display(["Tracer Boss"], 50, "orange");
 				if(Enemy.spawn2(new Boss)) this.summon = true;
 			}else if(enemies2.length == 0) {
 				Boss_1.stop();
@@ -152,6 +155,8 @@ function setupLevels() {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
+				if(tipNum < 8)
+					tip(["Sorry to throw you a curve-ball like this"], 100, "#ffa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Swerve)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Enemy)) this.summon2--}
@@ -166,6 +171,8 @@ function setupLevels() {
 				this.summon = 5;
 				this.summon2 = 5;
 				this.time = 50;
+				if(tipNum < 9)
+					tip(["Round and round and round it goes", "will it stop? Yes, shoot it."], 100, "#ffa");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Mover)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Tracer)) this.summon2--}
@@ -276,8 +283,21 @@ function setupLevels() {
 				this.time = 100;
 				if(Enemy.spawn2(new Boss2)) this.summon = true;
 			}else if(enemies2.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
 				Boss_2.stop();
 				Level_2.play();
+			}
+		},
+		function() {
+			Level_2.play();
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Chaser)) this.summon--}
+			else if(enemies.length == 0) {
+				
 			}
 		}
 	]

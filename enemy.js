@@ -1,7 +1,4 @@
 class Enemy extends Entity{
-	constructor() {
-		super();
-	}
 	color = "#fff";
 	static spawn(what) {
 		function check() {
@@ -86,6 +83,7 @@ class Waller extends Enemy{
 		let r = atan2(y - this.my, x - this.mx);
 		this.velocity.x += cos(r) * this.acl;
 		this.velocity.y += sin(r) * this.acl;
+		this.isMoving = true;
 	}
 	hitWall(x, y) {
 		var {r, velocity} = this;

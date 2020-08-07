@@ -1,6 +1,6 @@
 function menu() {
 	clear();
-	var text, size;
+	var text, size, edge = game.height/6, desc;
 	switch(menu.active) {
 		case "player":
 			let {
@@ -9,7 +9,6 @@ function menu() {
 				offset=0,
 				moveTo=0
 			} = this;
-			let edge = game.height/6;
 			if(this.screenLines) {
 				ctx.beginPath();
 				ctx.lineWidth = 1/scale;
@@ -35,7 +34,7 @@ function menu() {
 				player.draw();
 			}
 			ctx.scale(1/scale, 1/scale);
-			let desc = this.descriptions[selected];
+			desc = this.descriptions[selected];
 			ctx.font = `${edge/3 * scale}px Sans`;
 			for(let i = 0; i < desc.length; i++) {
 				text = desc[i];
@@ -67,12 +66,13 @@ function menu() {
 				moveTo++;
 				if(moveTo >= players.length) moveTo--;
 			}
-			if(keys.select) {
+			if(keys.select == 1) {
 				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4]
 				player = new sel[selected];
 				player.x = (game.width - player.s)/2;
 				player.y = (game.height - player.s)/2;
-				this.active = false;
+				keys.select = 2;
+				this.active = "continue";
 			}
 			Object.assign(this, {
 				players,
@@ -81,7 +81,77 @@ function menu() {
 				moveTo
 			});
 		break;
-
+		case "continue":
+			let {
+				levels,
+				bosses
+			} = this;
+			if(!Number(localStorage.level)) {
+				this.active = false;
+				return;
+			}
+			var max = Number(localStorage.level);
+			ctx.scale(1/scale, 1/scale);
+			text = "Level Select";
+			ctx.font = `${edge * scale}px Sans`;
+			size = ctx.measureText(text);
+			ctx.fillStyle = "white";
+			ctx.fillText(text, (canvas.width - size.width)/2, edge * scale);
+			if(level % 10 == 9) {
+				let n = (level + 1)/10
+				ctx.fillStyle = bosses[n - 1];
+				desc = this.bossdesc[n - 1];
+				text = `Boss ${n}`;
+			}else{
+				let n = floor(level/10);
+				ctx.fillStyle = levels[n];
+				desc = this.leveldesc[n];
+				text = `Level ${level + 1}`;
+			}
+			ctx.font = `${edge * scale * 3/4}px Veranda`;
+			size = ctx.measureText(text);
+			var wid = size.width/scale, hei = (game.height + edge * 1/4)/2;
+			ctx.fillText(text, (canvas.width - size.width)/2, (game.height + edge * 3/4) * scale/2);
+			ctx.font = `${edge/3 * scale}px Sans`;
+			for(let i = 0; i < desc.length; i++) {
+				if(i) ctx.font = `${edge/3 * scale}px Sans`;
+				else ctx.font = `${edge * 3/6 * scale}px Sans`;
+				text = desc[i];
+				size = ctx.measureText(text);
+				ctx.fillText(text, (canvas.width - size.width)/2, scale * edge/3 * (i + 12 - (i == 0? 6: 0)));
+			}
+			ctx.scale(scale, scale);
+			if(level > 0) {
+				ctx.beginPath();
+				ctx.moveTo((game.width - wid)/2 - edge/2, hei);
+				ctx.lineTo((game.width - wid)/2 - edge/8, hei + edge/4);
+				ctx.lineTo((game.width - wid)/2 - edge/8, hei - edge/4);
+				ctx.closePath();
+				ctx.fill();
+			}
+			if(level < max) {
+				ctx.beginPath();
+				ctx.moveTo((game.width + wid)/2 + edge/2, hei);
+				ctx.lineTo((game.width + wid)/2 + edge/8, hei + edge/4);
+				ctx.lineTo((game.width + wid)/2 + edge/8, hei - edge/4);
+				ctx.closePath();
+				ctx.fill();
+			}
+			if(keys.left2 == 1 || keys.left2 == 3) {
+				keys.left2 = 2;
+				level--;
+				if(level < 0) level++;
+			}
+			if(keys.right2 == 1 || keys.right2 == 3) {
+				keys.right2 = 2;
+				level++;
+				if(level > max) level--;
+			}
+			if(keys.select == 1) {
+				keys.select = 2;
+				this.active = false;
+			}
+		break;
 	}
 }
 Object.assign(menu, {
@@ -144,6 +214,43 @@ Object.assign(menu, {
 			"Four-way Shooting",
 			"",
 			"Here we go again."
+		]
+	],
+	levels: [
+		"#faa",
+		"#faf",
+		"#f55"
+	],
+	bosses: [
+		"#f50",
+		"#5aa"
+	],
+	leveldesc: [
+		[
+			"Stage 1",
+			"The begining",
+			"Basic Enemies with",
+			"movement that lacks any sense of purpose."
+		],
+		[
+			"Stage 2",
+			"Step up, step up",
+			"Movement is more layered and",
+			"a bit harder to pin down."
+		],
+		[]
+	],
+	bossdesc: [
+		[
+			"Tracer Boss",
+			"The first challenge of many.",
+			"The name is a big hint."
+		],
+		[
+			"MoveMaster",
+			"Master the pattern,",
+			"Master the movement,",
+			"Master the boss."
 		]
 	]
 });

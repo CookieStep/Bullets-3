@@ -1,5 +1,6 @@
 function main() {
 	genLevel(level);
+	if(!localStorage.level || level > localStorage.level)localStorage.level = level;
 	if(player.alive) player.update();
 	for(let bullet of bullets) bullet.update();
 	for(let xp of exp) {
