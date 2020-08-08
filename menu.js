@@ -82,7 +82,10 @@ function menu() {
 				player.y = (game.height - player.s)/2;
 				keys.select = 2;
 				if(this.players2.length > 1) this.active = "power";
-				else this.active = "level";
+				else{
+					this.active = "level";
+					player.color2 = this.powCol[0];
+				}
 			}
 			Object.assign(this, {
 				players,
