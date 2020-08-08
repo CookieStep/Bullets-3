@@ -57,7 +57,6 @@ class Entity{
 		ctx.translate(mx, my);
 		ctx.rotate(rad);
 		ctx.translate(-mx, -my);
-		var {x, y, s, color, hp, maxHp, inv} = this;
 		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
 		ctx.restore();
 	}

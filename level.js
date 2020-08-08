@@ -129,7 +129,7 @@ function setupLevels() {
 			if(this.summon > 0) {if(Enemy.spawn(new Waller)) this.summon--}
 			else if(enemies.length == 0) {
 				if(tipNum < 7)
-					tip(["Oh no... Looks like someone isn't", "happy with how far you've come..."], 100, "#f55");
+					tip(["Oh no... Looks like someone isn't", "happy with how far you've come..."], 100, "#d00");
 				Level_1.stop();
 				Boss_1.play();
 				if(this.time <= 0) level++;
@@ -156,7 +156,7 @@ function setupLevels() {
 				this.summon2 = 5;
 				this.time = 50;
 				if(tipNum < 8)
-					tip(["Sorry to throw you a curve-ball like this"], 100, "#ffa");
+					tip(["Sorry to throw you a curve-ball like this"], 100, "#faf");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Swerve)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Enemy)) this.summon2--}
@@ -172,7 +172,7 @@ function setupLevels() {
 				this.summon2 = 5;
 				this.time = 50;
 				if(tipNum < 9)
-					tip(["Round and round and round it goes", "will it stop? Yes, shoot it."], 100, "#ffa");
+					tip(["Round and round and round it goes", "will it stop? Yes, shoot it."], 100, "#aaf");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Mover)) this.summon--}
 			else if(this.summon2 > 0) {if(Enemy.spawn(new Tracer)) this.summon2--}
@@ -214,6 +214,8 @@ function setupLevels() {
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
+				if(tipNum < 10)
+					tip(["These will switch up on you"], 100, "#aff");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Bounce)) this.summon--}
 			else if(enemies.length == 0) {
@@ -240,6 +242,8 @@ function setupLevels() {
 			if(this.summon == undefined) {
 				this.summon = 5;
 				this.time = 50;
+				if(tipNum < 11)
+					tip(["Don't get too close, they", "might just sense your presence"], 100, "#555");
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Dash)) this.summon--}
 			else if(enemies.length == 0) {
@@ -281,6 +285,7 @@ function setupLevels() {
 			Boss_2.play();
 			if(!this.summon) {
 				this.time = 100;
+				display(["MoveMaster"], 50, "#5aa");
 				if(Enemy.spawn2(new Boss2)) this.summon = true;
 			}else if(enemies2.length == 0) {
 				if(this.time <= 0) level++;

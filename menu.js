@@ -3,11 +3,11 @@ function menu() {
 	var text, size, edge = game.height/6, desc;
 	switch(menu.active) {
 		case "player":
-			let {
+			var {
 				players=[new Player, new Player2, new Player3, new Player4, new HPlayer, new HPlayer2, new HPlayer3, new HPlayer4],
 				selected=0,
 				offset=0,
-				moveTo=0
+				moveTo=selected
 			} = this;
 			if(this.screenLines) {
 				ctx.beginPath();
@@ -43,7 +43,7 @@ function menu() {
 				ctx.fillText(text, (canvas.width - size.width)/2, scale * edge/3 * (i + 12 - (i == 0? 6: 0)));
 			}
 			ctx.scale(scale, scale);
-			let n = 10;
+			var n = 10;
 			if(moveTo != selected) {
 				offset += sign(moveTo - selected) * 1/n;
 				let s = offset % 1;
@@ -67,12 +67,22 @@ function menu() {
 				if(moveTo >= players.length) moveTo--;
 			}
 			if(keys.select == 1) {
-				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4]
+				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4];
 				player = new sel[selected];
+				this.players2 = [];
+				let unlocked = [true, Boolean(localStorage.dash)]
+				for(let i = 0; i < unlocked.length; i++) {
+					if(!unlocked[i]) continue;
+					let player = new sel[selected];
+					player.power = i;
+					player.color2 = this.powCol[i];
+					this.players2.push(player);
+				}
 				player.x = (game.width - player.s)/2;
 				player.y = (game.height - player.s)/2;
 				keys.select = 2;
-				this.active = "continue";
+				if(this.players2.length > 1) this.active = "power";
+				else this.active = "level";
 			}
 			Object.assign(this, {
 				players,
@@ -81,7 +91,74 @@ function menu() {
 				moveTo
 			});
 		break;
-		case "continue":
+		case "power":
+			var n = 10, {players2, selected2=0, moveTo2=selected2, offset2=0, hardcore} = this;
+			if(moveTo2 != selected2) {
+				offset2 += sign(moveTo2 - selected2) * 1/n;
+				let s = offset2 % 1;
+				selected2 += (offset2 - s);
+				offset2 %= 1;
+			}else if(offset2 > 0) {
+				offset2 -= 1/n;
+				if(offset2 < 0) offset2 = 0;
+			}else if(offset2 < 0) {
+				offset2 += 1/n;
+				if(offset2 > 0) offset2 = 0;
+			}
+			if(keys.left2 == 1 || keys.left2 == 3) {
+				keys.left2 = 2;
+				moveTo2--;
+				if(moveTo2 < 0) moveTo2++;
+			}
+			if(keys.right2 == 1 || keys.right2 == 3) {
+				keys.right2 = 2;
+				moveTo2++;
+				if(moveTo2 >= players2.length) moveTo2--;
+			}
+			for(let i = 0; i < players2.length; i++) {
+				let player = players2[i];
+				player.s = edge;
+				player.my = game.height/2;
+				player.mx = (i - selected2 - offset2) * (edge * 3) + game.width/2;
+				player.draw();
+			}
+			ctx.scale(1/scale, 1/scale);
+			text = "Power Select";
+			ctx.font = `${edge * scale}px Sans`;
+			size = ctx.measureText(text);
+			ctx.fillStyle = "white";
+			ctx.fillText(text, (canvas.width - size.width)/2, edge * scale);
+			desc = this.powdesc[selected2];
+			ctx.font = `${edge/3 * scale}px Sans`;
+			for(let i = 0; i < desc.length; i++) {
+				text = desc[i];
+				size = ctx.measureText(text);
+				ctx.fillStyle = players2[selected2].color2;
+				ctx.fillText(text, (canvas.width - size.width)/2, scale * edge/3 * (i + 12 - (i == 0? 6: 0)));
+			}
+			if(keys.back == 1) {
+				this.active = "player";
+				keys.back = 2;
+			}
+			if(keys.select == 1) {
+				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4];
+				player = new sel[this.selected];
+				player.power = players2[selected2].power;
+				player.color2 = this.powCol[players2[selected2].power];
+				player.x = (game.width - player.s)/2;
+				player.y = (game.height - player.s)/2;
+				keys.select = 2;
+				this.active = "level";
+			}
+			ctx.scale(scale, scale);
+			Object.assign(this, {
+				players2,
+				selected2,
+				offset2,
+				moveTo2
+			});
+		break;
+		case "level":
 			let {
 				levels,
 				bosses
@@ -146,6 +223,11 @@ function menu() {
 				keys.right2 = 2;
 				level++;
 				if(level > max) level--;
+			}
+			if(keys.back == 1) {
+				keys.back = 2;
+				if(this.players2.length > 1) this.active = "power";
+				else this.active = "player";
 			}
 			if(keys.select == 1) {
 				keys.select = 2;
@@ -228,13 +310,13 @@ Object.assign(menu, {
 	leveldesc: [
 		[
 			"Stage 1",
-			"The begining",
-			"Basic Enemies with",
+			"The Begining",
+			"Basic enemies with",
 			"movement that lacks any sense of purpose."
 		],
 		[
 			"Stage 2",
-			"Step up, step up",
+			"Step up, step up!",
 			"Movement is more layered and",
 			"a bit harder to pin down."
 		],
@@ -252,6 +334,20 @@ Object.assign(menu, {
 			"Master the movement,",
 			"Master the boss."
 		]
+	],
+	powCol: [
+		"#aff",
+		"#ffa"
+	],
+	powdesc: [
+		[
+			"Shoot",
+			"Fire bullets at your enemies."
+		],
+		[
+			"Dash",
+			"Dash at your enemies while invincible"
+		]
 	]
 });
 function bindMenu() {
@@ -265,14 +361,22 @@ function bindMenu() {
 	i = 0;
 	ctx.beginPath();
 	ctx.fillStyle = "#aaf";
-	ctx.rect2(game.width* 2/5, 0, game.width/5, edge/3 * (m + 1), game.width/10);
+	ctx.rect2(game.width* 2/5, 0, game.width/5, edge/3 * (m + 2), game.width/10);
 	if(mouse.click) {
-		selected = (mouse.y + edge/6) * 3/edge;
-		selected = Math.floor(selected);
-		if(selected >= m + 1 || selected < 1) selected = undefined;
-		mouse.click = false;
+		if(mouse.x > game.width * 2/5 && mouse.x < game.width * 3/5) {
+			selected = (mouse.y + edge/6) * 3/edge;
+			selected = Math.floor(selected);
+			if(selected == m + 1) {
+				resetKeybind();
+				setupKeybind();
+				localStorage.keyBind = JSON.stringify(keyBind);
+			}
+			if(selected >= m + 1 || selected < 1) selected = undefined;
+			mouse.click = false;
+		}else selected = undefined;
 	}
 	ctx.fill();
+	ctx.font = `${edge/4 * scale}px Sans`;
 	for(let key in keyBind) {
 		i++;
 		if(i == selected && bindMenu.add) {
@@ -281,7 +385,6 @@ function bindMenu() {
 			setupKeybind();
 			localStorage.keyBind = JSON.stringify(keyBind);
 		}
-		ctx.font = `${edge/4 * scale}px Sans`;
 		text = `${key[0].toUpperCase() + key.slice(1)} : ${keyBind[key]}`;
 		size = ctx.measureText(text);
 		ctx.fillStyle = i == selected? "#000": "#77f";
@@ -289,6 +392,20 @@ function bindMenu() {
 		ctx.rect2((game.width - size.width/scale - edge/4)/2, edge/3 * i - edge/6, size.width/scale + edge/4, edge/4, edge/8);
 		ctx.fill();
 		ctx.fillStyle = "#00f";
+		ctx.scale(1/scale, 1/scale);
+		ctx.fillText(text, (canvas.width - size.width)/2, edge/3 * (i + 0.05) * scale);
+		ctx.scale(scale, scale);
+	}
+	{
+		i++;
+		ctx.font = `${edge/4 * scale}px Sans`;
+		text = "Reset keybind";
+		size = ctx.measureText(text);
+		ctx.fillStyle = "#f77";
+		ctx.beginPath();
+		ctx.rect2((game.width - size.width/scale - edge/4)/2, edge/3 * i - edge/6, size.width/scale + edge/4, edge/4, edge/8);
+		ctx.fill();
+		ctx.fillStyle = "#f00";
 		ctx.scale(1/scale, 1/scale);
 		ctx.fillText(text, (canvas.width - size.width)/2, edge/3 * (i + 0.05) * scale);
 		ctx.scale(scale, scale);

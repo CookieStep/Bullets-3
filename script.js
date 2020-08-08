@@ -21,6 +21,10 @@ onresize = function() {
 		width: innerWidth,
 		height: innerHeight
 	});
+	Object.assign(game, {
+		width: innerWidth/scale,
+		height: innerHeight/scale
+	});
 	ctx.scale(scale, scale);
 }
 onblur = function() {
@@ -36,10 +40,7 @@ onmousedown = function(mouse) {
 	if(bindMenu.active) window.mouse = {x: mouse.x/scale, y: mouse.y/scale, click: true};
 }
 onfocus = function() {request = requestAnimationFrame(update);}
-var game = {
-	get width() {return innerWidth/scale},
-	get height() {return innerHeight/scale}
-}
+var game = {};
 function clear() {
 	ctx.beginPath();
 	ctx.rect(0, 0, game.width, game.height);
@@ -73,7 +74,8 @@ function resetKeybind() {
 		up2: 38,
 		glide: 16,
 		enter: 13,
-		select: 32
+		select: 32,
+		back: 8
 	};
 }
 function setupKeybind() {
@@ -101,7 +103,6 @@ onkeydown = function(pressed) {
 		enemies2 = [];
 		bullets = [];
 		exp = [];
-		level = 0;
 		added = 0;
 		lives = 3;
 		score = 0;

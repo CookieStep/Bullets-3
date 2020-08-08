@@ -216,11 +216,13 @@ class Boss extends Enemy{
 	onHit(attacker) {
 		if(!this.inv && this.alive) {
 			this.hp -= attacker.hit();
-			if(attacker.uid == player.uid) this.inv = 10;
+			if(attacker.uid == player.uid) this.inv = 2;
 			if(!this.alive) {
 				if(attacker.uid != player.uid && !player.inv) multiplier += this.multiplier;
 				Boom.play();
 				xp(this);
+				localStorage.dash = true;
+				display(["New skill unlocked"], 100, menu.powCol[1]);
 			}else Wall.play();
 		}
 	}
