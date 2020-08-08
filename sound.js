@@ -64,6 +64,10 @@ let Shoot = new Sound(
     {volume: 0.125},
     {src: "Music/Shoot.wav", type : "audio/wav"}
 )
+let Dash_ = new Sound(
+    {volume: 0.25},
+    {src: "Music/Dash.wav", type : "audio/wav"}
+)
 let Boom = new Sound(
     {volume: 0.125},
     {src: "Music/Boom.wav", type : "audio/wav"},
@@ -101,6 +105,10 @@ let Level_1 = new Bgm(
 let Level_2 = new Bgm(
     {volume: 1},
     {src: "Music/Level2.ogg", type : "audio/ogg"}
+)
+let Level_3 = new Bgm(
+    {volume: 1},
+    {src: "Music/Level3.ogg", type : "audio/ogg"}
 )
 let Boss_1 = new Bgm(
     {volume: 1},
