@@ -137,25 +137,55 @@ class Boss2 extends Boss{
 }
 class Minion2 extends Mover{
 	multiplier = 0.02;
+	xp = 30;
 	color = "#5aa";
 	time = 13;
+	onHit(attacker) {
+		if(!this.inv && this.alive) {
+			this.hp -= attacker.hit();
+			if(!this.alive) {
+				Boom.play();
+				if(attacker.uid != player.uid || player.inv) multiplier += this.multiplier;
+				if(Minion2.count) {
+					Minion2.count--;
+					xp(this);
+				}
+			}
+		}
+	}
 	tick() {
 		super.tick();
 		this.time--;
 		if(this.time <= 0) this.hp = 0;
 	}
+	static count = 0;
 	image = HPlayer;
 }
 class Minion2_2 extends Mover{
 	multiplier = 0.02;
+	xp = 50;
 	color = "#a5a";
 	time = 100;
 	maxHp = 2;
 	hp = 2;
+	onHit(attacker) {
+		if(!this.inv && this.alive) {
+			this.hp -= attacker.hit();
+			if(!this.alive) {
+				Boom.play();
+				if(attacker.uid != player.uid || player.inv) multiplier += this.multiplier;
+				if(Minion2_2.count) {
+					Minion2_2.count--;
+					xp(this);
+				}
+			}
+		}
+	}
 	tick() {
 		super.tick();
 		this.time--;
 		if(this.time <= 0) this.hp = 0;
 	}
 	image = HPlayer;
+	static count = 0;
 }

@@ -1,4 +1,4 @@
-let levels = [function() {}]
+var levels = [function() {}]
 function genLevel(num) {
 	return levels[num].call(levels[num]);
 }
@@ -277,6 +277,10 @@ function setupLevels() {
 			else if(enemies.length == 0) {
 				Level_2.stop();
 				Boss_2.play();
+				if(this.time == 0) {
+					if(tipNum < 12)
+						tip(["Remain calm."], 100, "#d00");
+				}
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
@@ -286,23 +290,169 @@ function setupLevels() {
 			if(!this.summon) {
 				this.time = 100;
 				display(["MoveMaster"], 50, "#5aa");
-				if(Enemy.spawn2(new Boss2)) this.summon = true;
+				if(Enemy.spawn2(new Boss2)) {
+					this.summon = true;
+					Minion2.count = 10;
+					Minion2_2.count = 10;
+				}
 			}else if(enemies2.length == 0) {
 				if(this.time <= 0) level++;
 				else this.time--;
 				Boss_2.stop();
-				Level_2.play();
+				Level_3.play();
 			}
 		},
 		function() {
-			Level_2.play();
+			Level_3.play();
 			if(this.summon == undefined) {
+				if(tipNum < 12)
+					tip(["I think these ones can see you"], 100, "#f55");
 				this.summon = 5;
 				this.time = 50;
 			};
 			if(this.summon > 0) {if(Enemy.spawn(new Chaser)) this.summon--}
 			else if(enemies.length == 0) {
-				
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Patrol)) this.summon--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.summon2 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Pushed)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Pusher)) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.summon2 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Chaser)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Patrol)) this.summon2--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 3;
+				this.summon2 = 2;
+				this.summon3 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Pushed)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Pusher)) this.summon2--}
+			else if(this.summon3 > 0) {if(Enemy.spawn(new Patrol)) this.summon3--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 3;
+				this.summon2 = 2;
+				this.summon3 = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Pushed)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Pusher)) this.summon2--}
+			else if(this.summon3 > 0) {if(Enemy.spawn(new Chaser)) this.summon3--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 3;
+				this.summon2 = 2;
+				this.summon3 = 3;
+				this.summon4 = 2;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Pushed)) this.summon--}
+			else if(this.summon2 > 0) {if(Enemy.spawn(new Pusher)) this.summon2--}
+			else if(this.summon3 > 0) {if(Enemy.spawn(new Chaser)) this.summon3--}
+			else if(this.summon4 > 0) {if(Enemy.spawn(new Dash)) this.summon4--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 5;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Tough)) this.summon--}
+			else if(enemies.length == 0) {
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Level_3.play();
+			if(this.summon == undefined) {
+				this.summon = 10;
+				this.time = 50;
+			};
+			if(this.summon > 0) {if(Enemy.spawn(new Tough)) this.summon--}
+			else if(enemies.length == 0) {
+				Level_3.stop();
+				Boss_2.play();
+				if(this.time <= 0) level++;
+				else this.time--;
+			}
+		},
+		function() {
+			Boss_2.play();
+			if(!this.summon) {
+				this.time = 100;
+				display(["MoveMaster"], 50, "#5aa");
+				if(Enemy.spawn(new Boss3)) {
+					let i = enemies[0];
+					let {x, y} = i;
+					let n = new Boss3_2;
+					if(Enemy.spawn(n)) {
+						enemies.push(n);
+						i.partner = n;
+						n.partner = i;
+						this.summon = true;
+					}else enemies = [];
+				}
+			}else if(enemies.length == 0) {
+				// if(this.time <= 0) level++;
+				// else this.time--;
+				Boss_2.stop();
+				Level_3.play();
 			}
 		}
 	]

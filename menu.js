@@ -171,6 +171,7 @@ function menu() {
 				return;
 			}
 			var max = Number(localStorage.level);
+			if(max > window.levels.length - 1) max = window.levels.length - 1;
 			ctx.scale(1/scale, 1/scale);
 			text = "Level Select";
 			ctx.font = `${edge * scale}px Sans`;
@@ -336,7 +337,8 @@ Object.assign(menu, {
 			"Master the pattern,",
 			"Master the movement,",
 			"Master the boss."
-		]
+		],
+		[]
 	],
 	powCol: [
 		"#aff",

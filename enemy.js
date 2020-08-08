@@ -22,18 +22,13 @@ class Enemy extends Entity{
 		return true;
 	}
 	static spawn2(what) {
-		function check() {
-			if(enemies.length) for(let enemy of enemies)
-				if(Entity.isTouching(what, enemy) && what.uid != enemy.uid)
-					return true;
-		}
 		var i = 0, chk;
 		do{
 			assign(what, {
 				x: random(game.width - what.s),
 				y: random(game.height - what.s)
 			});
-			chk = check() || Entity.distance(player, what) < 10;
+			chk = Entity.distance(player, what) < 10;
 			if(chk && i++ > 100) {
 				return;
 			}

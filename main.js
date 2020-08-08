@@ -19,6 +19,18 @@ function main() {
 		if(player.alive) if(Entity.isTouching(player, enemy)) {
 			player.onHit(enemy);
 			enemy.onHit(player);
+			let enemy2 = player;
+			let s = (enemy.s + enemy2.s)/2,
+				x = enemy.mx - enemy2.mx,
+				y = enemy.my - enemy2.my;
+			if(x <= s) {
+				enemy.velocity.x += x/10/s;
+				enemy2.velocity.x -= x/10/s;
+			}
+			if(y <= s) {
+				enemy.velocity.y += y/10/s;
+				enemy2.velocity.y -= y/10/s;
+			}
 		}
 		for(let bullet of bullets) {
 			if(Entity.isTouching(enemy, bullet) && enemy.alive && bullet.alive) {
@@ -28,8 +40,8 @@ function main() {
 				let s = (enemy.s + enemy2.s)/2,
 					x = enemy.mx - enemy2.mx,
 					y = enemy.my - enemy2.my;
-				if(x <= s) enemy.velocity.x += bullet.velocity.x * -x;
-				if(y <= s) enemy.velocity.y += bullet.velocity.y * -y;
+				if(x <= s) enemy.velocity.x += bullet.velocity.x * -x/s;
+				if(y <= s) enemy.velocity.y += bullet.velocity.y * -y/s;
 			}
 		}
 		for(let b = a + 1; b < enemies.length; b++) {
@@ -39,12 +51,12 @@ function main() {
 					x = enemy.mx - enemy2.mx,
 					y = enemy.my - enemy2.my;
 				if(x <= s) {
-					enemy.velocity.x += x/10;
-					enemy2.velocity.x -= x/10;
+					enemy.velocity.x += x/10/s;
+					enemy2.velocity.x -= x/10/s;
 				}
 				if(y <= s) {
-					enemy.velocity.y += y/10;
-					enemy2.velocity.y -= y/10;
+					enemy.velocity.y += y/10/s;
+					enemy2.velocity.y -= y/10/s;
 				}
 				Wall.play();
 			}
@@ -56,6 +68,16 @@ function main() {
 		if(player.alive) if(Entity.isTouching(player, enemy)) {
 			enemy.onHit(player);
 			player.onHit(enemy);
+			let enemy2 = player;
+			let s = (enemy.s + enemy2.s)/2,
+				x = enemy.mx - enemy2.mx,
+				y = enemy.my - enemy2.my;
+			if(x <= s) {
+				enemy2.velocity.x -= x/10/s;
+			}
+			if(y <= s) {
+				enemy2.velocity.y -= y/10/s;
+			}
 		}
 		for(let bullet of bullets) {
 			if(Entity.isTouching(enemy, bullet) && enemy.alive && bullet.alive) {

@@ -3,12 +3,13 @@ class Entity{
 		this.uid = Entity.uid++;
 		this.hp = this.maxHp; this.inv = 0;
 	}
+	friction = 0.9;
 	tick() {}
 	forces() {
 		var {velocity, spd} = this;
 		if(this.dis > spd) this.dis = spd;
 		this.x += velocity.x; this.y += velocity.y;
-		if(!this.isMoving) this.dis *= 0.9;
+		if(!this.isMoving) this.dis *= this.friction;
 		else this.isMoving = false;
 	}
 	screenlock() {
@@ -98,7 +99,7 @@ class Entity{
 			this.hp -= attacker.hit();
 			if(!this.alive) {
 				Boom.play();
-				if(attacker.uid != player.uid && !player.inv) multiplier += this.multiplier;
+				if(attacker.uid != player.uid || player.inv) multiplier += this.multiplier;
 				xp(this);
 			}
 		}

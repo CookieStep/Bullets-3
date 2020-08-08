@@ -36,8 +36,8 @@ class Player extends Entity{
 		if(this.dis > spd) this.dis = spd;
 		this.x += velocity.x; this.y += velocity.y;
 		this.x += velocity2.x; this.y += velocity2.y;
-		this.dis2 *= 0.9;
-		if(!this.isMoving) this.dis *= 0.9;
+		this.dis2 *= this.friction;
+		if(!this.isMoving) this.dis *= this.friction;
 		else this.isMoving = false;
 	}
 	tick() {
@@ -101,7 +101,8 @@ class Player extends Entity{
 	}
 	dash(mov) {
 		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 50;
+		Dash_.play();
+		this.lastShot = 40;
 		this.inv = 25;
 		this.velocity2.x += cos(rad) * this.spd * 2;
 		this.velocity2.y += sin(rad) * this.spd * 2;
@@ -150,8 +151,9 @@ class Player2 extends Player{
 		Shoot.play();
 	}
 	dash(mov) {
+		Dash_.play();
 		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 50;
+		this.lastShot = 40;
 		this.inv = 25;
 		this.velocity2.x += cos(rad + this.rad + PI/2) * this.spd * 2;
 		this.velocity2.y += sin(rad + this.rad + PI/2) * this.spd * 2;
@@ -210,8 +212,9 @@ class Player3 extends Player{
 		Shoot.play();
 	}
 	dash(mov) {
+		Dash_.play();
 		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 50;
+		this.lastShot = 40;
 		this.inv = 25;
 		this.velocity2.x += cos(rad + this.r + PI/2) * this.spd * 2;
 		this.velocity2.y += sin(rad + this.r + PI/2) * this.spd * 2;

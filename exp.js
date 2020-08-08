@@ -3,13 +3,14 @@ class Exp extends Entity{
         this.r += this.rot;
         if(player.alive && Entity.distance(player, this) < 5) {
             var {velocity} = this;
+            this.spd = this.rspd * 2;
             let dis = (Entity.distance(this, player) - (this.s + player.s)/2)/5;
             dis = 1 - dis;
             let r = Entity.radian(this, player);
             velocity.x += cos(r) * this.acl * dis;
             velocity.y += sin(r) * this.acl * dis;
             this.isMoving = true;
-        }
+        }else this.spd = this.rspd;
     }
 	draw() {
         var {x, y, mx, my, s, color, inv, hp, maxHp, r} = this;
@@ -27,8 +28,9 @@ class Exp extends Entity{
     color = "#ff0";
     rot = random(PI/32);
     r = random(PI * 2);
-    friction = 0.99;
-    s = 0.2; spd = 0.1;
+    friction = 0.95;
+    s = 0.2; spd = 0.05;
+    rspd = 0.05;
 }
 function xp(what) {
     if(what.xp > 0) {
