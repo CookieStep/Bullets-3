@@ -437,12 +437,11 @@ function setupLevels() {
 			if(!this.summon) {
 				this.time = 100;
 				display(["MoveMaster"], 50, "#5aa");
-				if(Enemy.spawn(new Boss3)) {
-					let i = enemies[0];
+				let i = new Boss3;
+				if(Enemy.spawn(i)) {
 					let {x, y} = i;
 					let n = new Boss3_2;
 					if(Enemy.spawn(n)) {
-						enemies.push(n);
 						i.partner = n;
 						n.partner = i;
 						this.summon = true;
