@@ -427,16 +427,23 @@ function setupLevels() {
 			if(this.summon > 0) {if(Enemy.spawn(new Tough)) this.summon--}
 			else if(enemies.length == 0) {
 				Level_3.stop();
-				Boss_2.play();
+				Boss_3.play();
 				if(this.time <= 0) level++;
 				else this.time--;
 			}
 		},
 		function() {
-			Boss_2.play();
+			if(!this.second) {
+				Boss_3.play();
+				if(enemies.length == 1) {
+					this.second = true;
+					Boss_3.stop();
+					Boss_3_2.play();
+				}
+			}else Boss_3_2.play();
 			if(!this.summon) {
 				this.time = 100;
-				display(["MoveMaster"], 50, "#5aa");
+				display(["PushBros"], 50, "#aaf");
 				let i = new Boss3;
 				if(Enemy.spawn(i)) {
 					let {x, y} = i;
@@ -450,7 +457,8 @@ function setupLevels() {
 			}else if(enemies.length == 0) {
 				// if(this.time <= 0) level++;
 				// else this.time--;
-				Boss_2.stop();
+				Boss_3.stop();
+				Boss_3_2.stop();
 				Level_3.play();
 			}
 		}

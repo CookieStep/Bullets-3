@@ -129,6 +129,19 @@ class Boss2 extends Boss{
 			break;
 		}
 	}
+	onHit(attacker) {
+		if(!this.inv && this.alive) {
+			this.hp -= attacker.hit();
+			if(attacker.uid == player.uid) this.inv = 10;
+			if(!this.alive) {
+				if(attacker.uid != player.uid || player.inv) multiplier += this.multiplier;
+				Boom.play();
+				xp(this);
+				if(!localStorage.control) display(["New skill unlocked"], 100, menu.powCol[1]);
+				localStorage.control = true;
+			}else Wall.play();
+		}
+	}
 	maxHp = 40;
 	multiplier = 1.5;
 	hp = 40;

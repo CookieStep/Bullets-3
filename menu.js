@@ -70,7 +70,7 @@ function menu() {
 				let sel = [Player, Player2, Player3, Player4, HPlayer, HPlayer2, HPlayer3, HPlayer4];
 				player = new sel[selected];
 				this.players2 = [];
-				let unlocked = [true, Boolean(localStorage.dash)]
+				let unlocked = [true, Boolean(localStorage.dash), Boolean(localStorage.control)];
 				for(let i = 0; i < unlocked.length; i++) {
 					if(!unlocked[i]) continue;
 					let player = new sel[selected];
@@ -137,6 +137,8 @@ function menu() {
 				text = desc[i];
 				size = ctx.measureText(text);
 				ctx.fillStyle = players2[selected2].color2;
+				if(i == 4) ctx.fillStyle = "#fa5";
+				if(i == 5) ctx.fillStyle = "#afa";
 				ctx.fillText(text, (canvas.width - size.width)/2, scale * edge/3 * (i + 12 - (i == 0? 6: 0)));
 			}
 			if(keys.back == 1) {
@@ -342,16 +344,33 @@ Object.assign(menu, {
 	],
 	powCol: [
 		"#aff",
-		"#ffa"
+		"#ffa",
+		"#faf"
 	],
 	powdesc: [
 		[
 			"Shoot",
-			"Fire bullets at your enemies."
+			"Fire bullets at your enemies.",
+			"",
+			"",
+			"Damage: 1",
+			"Reload: 10"
 		],
 		[
 			"Dash",
-			"Dash at your enemies while invincible"
+			"Dash at your enemies while invincible",
+			"",
+			"",
+			"Damage: 3",
+			"Reload: 40"
+		],
+		[
+			"Remote Bullets",
+			"Have total control over your bullets",
+			"Press Glide to summon",
+			"",
+			"Damage: 3",
+			"Reload: 30"
 		]
 	]
 });

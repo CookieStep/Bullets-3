@@ -103,10 +103,13 @@ class Patrol extends Mover{
 class Pusher extends Chaser{
 	tick() {
 		let targets = enemies.filter((a) => a instanceof Pushed && !a.target && Entity.distance(this, a) < 7.5);
+		if(!targets.length) {
+			targets = enemies2.filter((a) => a instanceof Pushed && !a.target && Entity.distance(this, a) < 7.5);
+		}
 		targets.sort((a, b) => Entity.distance(this, a) - Entity.distance(this, b));
 		let [target] = targets;
 		if(target) {
-			this.color = "#5f5";
+			if(this.change) this.color = "#5f5";
 			this.time += 2;
 			this.isMoving = true;
 			target.target = true;
@@ -118,13 +121,14 @@ class Pusher extends Chaser{
 			}else this.dis += this.acl;
 			this.isMoving = true;
 			this.time++;
-			this.color = "#afa";
+			if(this.change) this.color = "#afa";
 		}
 	}
 	multiplier = 0.03;
 	xp = 75;
 	spd = this.spd * 2;
 	image = Pusher;
+	change = true;
 	static store = {};
 	static draw(ctx=canvas.getContext("2d"), s, time) {
         ctx.arc(s/2, s/2, s/2, time, PI * 2 - time);

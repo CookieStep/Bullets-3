@@ -48,3 +48,26 @@ class Bullet extends Entity{
         bullets.push(bullet);
     }
 }
+class Controlled extends Entity{
+    constructor(parent) {
+        super();
+        this.parent = parent;
+    }
+	draw() {
+		var {x, y, mx, my, s, rad, color, inv, hp, maxHp, parent} = this;
+		ctx.save();
+		ctx.translate(mx, my);
+		ctx.rotate(parent.r2 != undefined? parent.r2: rad);
+		ctx.translate(-mx, -my);
+		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
+		ctx.restore();
+	}
+    tick() {
+        var {parent} = this;
+        if(parent.mov.x || parent.mov.y)this.move(parent.mov);
+        this.color = parent.color;
+        this.hp = parent.hp;
+    }
+    image = HPlayer3;
+    s = 0.3; atk = 3;
+}

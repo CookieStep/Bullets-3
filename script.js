@@ -29,11 +29,7 @@ onresize = function() {
 }
 onblur = function() {
 	keys = {};
-	Level_1.pause();
-	Boss_1.pause();
-	Level_2.pause();
-	Boss_2.pause();
-	Level_3.pause();
+	for(let song of music) song.pause();
 	cancelAnimationFrame(request);
 }
 var mouse = {x: 0, y: 0}
@@ -110,11 +106,7 @@ onkeydown = function(pressed) {
 		multiplier = 1;
 		menu.active = "player";
 		setupLevels();
-		Level_1.stop();
-		Boss_1.stop();
-		Level_2.stop();
-		Boss_2.stop();
-		Level_3.stop();
+		for(let song of music) song.stop();
 	}
 	if(bindMenu.active && bindMenu.selected && !(pressed.key.length == 2 && pressed.key[0] == "F")) {
 		bindMenu.add = pressed.keyCode;

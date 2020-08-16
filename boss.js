@@ -216,7 +216,7 @@ class Boss extends Enemy{
 	onHit(attacker) {
 		if(!this.inv && this.alive) {
 			this.hp -= attacker.hit();
-			if(attacker.uid == player.uid) this.inv = 2;
+			if(attacker.uid == player.uid) this.inv = 10;
 			if(!this.alive) {
 				if(attacker.uid != player.uid || player.inv) multiplier += this.multiplier;
 				Boom.play();
