@@ -18,7 +18,7 @@ class Chaser extends Mover{
 		ctx.translate(mx, my);
 		ctx.rotate(rad);
 		ctx.translate(-mx, -my);
-		var {x, y, s, color, hp, maxHp, inv} = this;
+		color = forceColor || color;
 		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s, this.time), x, y, s, s);
 		ctx.restore();
 	}
@@ -72,6 +72,7 @@ class Patrol extends Mover{
 	color = "#ddd";
 	color2 = "#555";
 	xp = 60;
+	multiplier = 0.03;
 	time = 0;
 	loc = {};
 	tick() {
@@ -86,8 +87,12 @@ class Patrol extends Mover{
 			this.time = round(random(40)) + 10
 		}
 	}
+	hitWall() {
+		this.time = 0;
+	}
 	draw() {
 		var {x, y, mx, my, s, rad, color, color2, inv, hp, maxHp} = this;
+		color = forceColor || color;
 		let r = Entity.radian(this, this.loc);
 		let dis = Entity.distance(this, this.loc);
 		if(dis > 1) dis = 1;
