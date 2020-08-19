@@ -1,8 +1,10 @@
-var levels = [function() {}]
+var levels = [];
 function genLevel(num) {
+    if(!levels[num]) return;
 	return levels[num].call(levels[num]);
 }
 function setupLevels() {
+	setupBonusLevels();
 	levels = [
 		function() {
 			Level_1.play();

@@ -1,6 +1,6 @@
 function main() {
 	genLevel(level);
-	if(!localStorage.level || level > localStorage.level)localStorage.level = level;
+	if(!localStorage.level || level > localStorage.level) localStorage.level = level;
 	if(player.alive) player.update();
 	for(let bullet of bullets) bullet.update();
 	for(let xp of exp) {
@@ -72,12 +72,8 @@ function main() {
 			let s = (enemy.s + enemy2.s)/2,
 				x = enemy.mx - enemy2.mx,
 				y = enemy.my - enemy2.my;
-			if(x <= s) {
-				enemy2.velocity.x -= x/10/s;
-			}
-			if(y <= s) {
-				enemy2.velocity.y -= y/10/s;
-			}
+			if(x <= s) enemy2.velocity.x -= x/10/s;
+			if(y <= s) enemy2.velocity.y -= y/10/s;
 		}
 		for(let bullet of bullets) {
 			if(Entity.isTouching(enemy, bullet) && enemy.alive && bullet.alive) {
@@ -103,7 +99,7 @@ function main() {
 		}
 	}
 	let size = canvas.height/6, text = `Level ${level + 1}`;
-	if(level % 10 == 9) text = `Boss ${(level + 1)/10}`;
+	if(level % 10 == 9 && !bonus) text = `Boss ${(level + 1)/10}`;
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = player.hardcore? "#fa5": "#aaf";
 	ctx.fillText(text, (canvas.width - ctx.measureText(text).width), size/2);

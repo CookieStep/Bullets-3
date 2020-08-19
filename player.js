@@ -84,9 +84,8 @@ class Player extends Entity{
 		}else{
 			this.mov = {x: 0, y: 0};
 		}
-		if(keys.glide == 1 && this.power == 2 && this.lastShot <= 0) {
+		if(keys.glide == 1 && this.power == 2 && this.lastShot <= 0)
 			this.control();
-		}
 		if(keys.glide) this.isMoving = true;
 	}
 	power = 0;
@@ -116,6 +115,7 @@ class Player extends Entity{
 		this.mov = mov;
 	}
 	control() {
+		if(bullets.length > 9) return;
 		this.lastShot = 30;
 		let bul = new Controlled(this);
 		bul.move = function(mov) {
@@ -133,7 +133,7 @@ class Player extends Entity{
 		ctx.rect2(0, 0, s, s, s/3);
 	}
 	draw() {
-		var {x, y, mx, my, s, rad, color, color2, inv, hp, maxHp, r} = this;
+		var {x, y, mx, my, s, rad, color, color2, inv, hp, maxHp} = this;
 		ctx.save();
 		ctx.translate(mx, my);
 		ctx.rotate(rad);

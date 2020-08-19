@@ -13,7 +13,6 @@ class Entity{
 		else this.isMoving = false;
 	}
 	screenlock() {
-		var {velocity} = this;
 		let value = false;
 		if(this.x < 0) {
 			value = true;
