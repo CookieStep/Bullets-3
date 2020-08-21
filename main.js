@@ -99,7 +99,7 @@ function main() {
 		}
 	}
 	let size = canvas.height/6, text = `Level ${level + 1}`;
-	if(level % 10 == 9 && !bonus) text = `Boss ${(level + 1)/10}`;
+	if(level % 10 == 9) text = `Boss ${(level + 1)/10}`;
 	ctx.font = `${size/2}px Arial`;
 	ctx.fillStyle = player.hardcore? "#fa5": "#aaf";
 	ctx.fillText(text, (canvas.width - ctx.measureText(text).width), size/2);
