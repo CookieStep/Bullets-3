@@ -300,16 +300,16 @@ class Player4 extends Player{
 		ctx.lineTo(0, 0);
 		ctx.closePath();
 	}
-	draw() {
-		var {x, y, mx, my, s, r, color, color2, inv, hp, maxHp, r} = this;
-		ctx.save();
-		ctx.translate(mx, my);
-		ctx.rotate(r);
-		ctx.translate(-mx, -my);
-		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
-		ctx.drawImage(this.image.image(this.lastShot? 0: hp, maxHp, color2, 0, s/2), x + s/4, y + s/4, s/2, s/2);
-		ctx.restore();
-	}
+// 	draw() {
+// 		var {x, y, mx, my, s, r, color, color2, inv, hp, maxHp, r} = this;
+// 		ctx.save();
+// 		ctx.translate(mx, my);
+// 		ctx.rotate(r);
+// 		ctx.translate(-mx, -my);
+// 		ctx.drawImage(this.image.image(hp, maxHp, color, inv, s), x, y, s, s);
+// 		ctx.drawImage(this.image.image(this.lastShot? 0: hp, maxHp, color2, 0, s/2), x + s/4, y + s/4, s/2, s/2);
+// 		ctx.restore();
+// 	}
 // 	move(mov) {
 // 		var {velocity, acl, r} = this
 // 		this.r += PI/28 * sign(mov.x);
