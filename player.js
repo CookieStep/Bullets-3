@@ -166,40 +166,40 @@ class Player extends Entity{
 	color2 = "#55f";
 }
 class Player2 extends Player{
-	shoot(mov) {
-		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 10;
-		Bullet.summon(this, new Bullet(rad + this.rad + PI/2));
-		Shoot.play();
-	}
-	dash(mov) {
-		Dash_.play();
-		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 40;
-		this.inv = 25;
-		this.velocity2.x += cos(rad + this.rad + PI/2) * this.spd * 2;
-		this.velocity2.y += sin(rad + this.rad + PI/2) * this.spd * 2;
-	}
-	targets(mov) {
-		this.mov = mov;
-		this.r2 += PI/28 * sign(mov.x);
-	}
-	control() {
-		let bul = new Controlled(this);
-		this.lastShot = 30;
-		bul.move = function(mov) {
-			var {velocity, acl, parent} = this;
-			var {r2} = parent;
-			if(mov.y) {
-				this.isMoving = true;
-				velocity.x -= cos(r2) * acl * sign(mov.y);
-				velocity.y -= sin(r2) * acl * sign(mov.y);
-			}
-		}
-		bul.mx = this.mx;
-		bul.my = this.my;
-		bullets.push(bul);
-	}
+// 	shoot(mov) {
+// 		let rad = atan2(mov.y, mov.x);
+// 		this.lastShot = 10;
+// 		Bullet.summon(this, new Bullet(rad + this.rad + PI/2));
+// 		Shoot.play();
+// 	}
+// 	dash(mov) {
+// 		Dash_.play();
+// 		let rad = atan2(mov.y, mov.x);
+// 		this.lastShot = 40;
+// 		this.inv = 25;
+// 		this.velocity2.x += cos(rad + this.rad + PI/2) * this.spd * 2;
+// 		this.velocity2.y += sin(rad + this.rad + PI/2) * this.spd * 2;
+// 	}
+// 	targets(mov) {
+// 		this.mov = mov;
+// 		this.r2 += PI/28 * sign(mov.x);
+// 	}
+// 	control() {
+// 		let bul = new Controlled(this);
+// 		this.lastShot = 30;
+// 		bul.move = function(mov) {
+// 			var {velocity, acl, parent} = this;
+// 			var {r2} = parent;
+// 			if(mov.y) {
+// 				this.isMoving = true;
+// 				velocity.x -= cos(r2) * acl * sign(mov.y);
+// 				velocity.y -= sin(r2) * acl * sign(mov.y);
+// 			}
+// 		}
+// 		bul.mx = this.mx;
+// 		bul.my = this.my;
+// 		bullets.push(bul);
+// 	}
 	static draw(ctx, s) {
 		let r = s/3;
 		ctx.moveTo(r, 0);
@@ -239,49 +239,49 @@ class Player3 extends Player{
 		ctx.drawImage(this.image.image(this.lastShot? 0: hp, maxHp, color2, 0, s/2), x + s/4, y + s/4, s/2, s/2);
 		ctx.restore();
 	}
-	move(mov) {
-		var {velocity, acl, r} = this
-		this.r += PI/28 * sign(mov.x);
-		if(mov.y) {
-			this.isMoving = true;
-			velocity.x -= cos(r) * acl * sign(mov.y);
-			velocity.y -= sin(r) * acl * sign(mov.y);
-		}
-	}
-	shoot(mov) {
-		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 10;
-		Bullet.summon(this, new Bullet(rad + this.r + PI/2));
-		Shoot.play();
-	}
-	dash(mov) {
-		Dash_.play();
-		let rad = atan2(mov.y, mov.x);
-		this.lastShot = 40;
-		this.inv = 25;
-		this.velocity2.x += cos(rad + this.r + PI/2) * this.spd * 2;
-		this.velocity2.y += sin(rad + this.r + PI/2) * this.spd * 2;
-	}
-	targets(mov) {
-		this.mov = mov;
-		this.r2 += PI/28 * sign(mov.x);
-	}
-	control() {
-		let bul = new Controlled(this);
-		this.lastShot = 30;
-		bul.move = function(mov) {
-			var {velocity, acl, parent} = this;
-			var {r2} = parent;
-			if(mov.y) {
-				this.isMoving = true;
-				velocity.x -= cos(r2) * acl * sign(mov.y);
-				velocity.y -= sin(r2) * acl * sign(mov.y);
-			}
-		}
-		bul.mx = this.mx;
-		bul.my = this.my;
-		bullets.push(bul);
-	}
+// 	move(mov) {
+// 		var {velocity, acl, r} = this
+// 		this.r += PI/28 * sign(mov.x);
+// 		if(mov.y) {
+// 			this.isMoving = true;
+// 			velocity.x -= cos(r) * acl * sign(mov.y);
+// 			velocity.y -= sin(r) * acl * sign(mov.y);
+// 		}
+// 	}
+// 	shoot(mov) {
+// 		let rad = atan2(mov.y, mov.x);
+// 		this.lastShot = 10;
+// 		Bullet.summon(this, new Bullet(rad + this.r + PI/2));
+// 		Shoot.play();
+// 	}
+// 	dash(mov) {
+// 		Dash_.play();
+// 		let rad = atan2(mov.y, mov.x);
+// 		this.lastShot = 40;
+// 		this.inv = 25;
+// 		this.velocity2.x += cos(rad + this.r + PI/2) * this.spd * 2;
+// 		this.velocity2.y += sin(rad + this.r + PI/2) * this.spd * 2;
+// 	}
+// 	targets(mov) {
+// 		this.mov = mov;
+// 		this.r2 += PI/28 * sign(mov.x);
+// 	}
+// 	control() {
+// 		let bul = new Controlled(this);
+// 		this.lastShot = 30;
+// 		bul.move = function(mov) {
+// 			var {velocity, acl, parent} = this;
+// 			var {r2} = parent;
+// 			if(mov.y) {
+// 				this.isMoving = true;
+// 				velocity.x -= cos(r2) * acl * sign(mov.y);
+// 				velocity.y -= sin(r2) * acl * sign(mov.y);
+// 			}
+// 		}
+// 		bul.mx = this.mx;
+// 		bul.my = this.my;
+// 		bullets.push(bul);
+// 	}
 	r = 0; r2 = 0;
 	static store = {};
 	image = Player3;
@@ -310,32 +310,32 @@ class Player4 extends Player{
 		ctx.drawImage(this.image.image(this.lastShot? 0: hp, maxHp, color2, 0, s/2), x + s/4, y + s/4, s/2, s/2);
 		ctx.restore();
 	}
-	move(mov) {
-		var {velocity, acl, r} = this
-		this.r += PI/28 * sign(mov.x);
-		if(mov.y) {
-			this.isMoving = true;
-			velocity.x -= cos(r) * acl * sign(mov.y);
-			velocity.y -= sin(r) * acl * sign(mov.y);
-		}
-	}
-	targets(mov) {
-		this.mov = mov;
-	}
-	control() {
-		let bul = new Controlled(this);
-		this.lastShot = 30;
-		bul.move = function(mov) {
-			var {velocity, acl} = this;
-			let rad = atan2(mov.y, mov.x);
-			velocity.x += cos(rad) * acl;
-			velocity.y += sin(rad) * acl;
-			this.isMoving = true;
-		}
-		bul.mx = this.mx;
-		bul.my = this.my;
-		bullets.push(bul);
-	}
+// 	move(mov) {
+// 		var {velocity, acl, r} = this
+// 		this.r += PI/28 * sign(mov.x);
+// 		if(mov.y) {
+// 			this.isMoving = true;
+// 			velocity.x -= cos(r) * acl * sign(mov.y);
+// 			velocity.y -= sin(r) * acl * sign(mov.y);
+// 		}
+// 	}
+// 	targets(mov) {
+// 		this.mov = mov;
+// 	}
+// 	control() {
+// 		let bul = new Controlled(this);
+// 		this.lastShot = 30;
+// 		bul.move = function(mov) {
+// 			var {velocity, acl} = this;
+// 			let rad = atan2(mov.y, mov.x);
+// 			velocity.x += cos(rad) * acl;
+// 			velocity.y += sin(rad) * acl;
+// 			this.isMoving = true;
+// 		}
+// 		bul.mx = this.mx;
+// 		bul.my = this.my;
+// 		bullets.push(bul);
+// 	}
 	r = 0;
 	static store = {};
 	image = Player4;
