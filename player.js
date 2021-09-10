@@ -211,7 +211,7 @@ class Player2 extends Player{
 		ctx.lineTo(0, 0);
 		ctx.closePath();
 	}
-	r2 = 0;
+// 	r2 = 0;
 	static store = {};
 	image = Player2;
 	color = "#5f5";
@@ -282,7 +282,7 @@ class Player3 extends Player{
 // 		bul.my = this.my;
 // 		bullets.push(bul);
 // 	}
-	r = 0; r2 = 0;
+// 	r = 0; r2 = 0;
 	static store = {};
 	image = Player3;
 	color = "#f55";
@@ -336,7 +336,7 @@ class Player4 extends Player{
 // 		bul.my = this.my;
 // 		bullets.push(bul);
 // 	}
-	r = 0;
+// 	r = 0;
 	static store = {};
 	image = Player4;
 	color = "#ff5";
