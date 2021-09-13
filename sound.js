@@ -7,7 +7,7 @@ class Sound {
         let {volume=1} = options;
         for(let source of sources) {
             let element = document.createElement("audio");
-//             element.volume = volume/16;
+            element.volume = volume/16;
             let child = document.createElement("source");
             Object.assign(child, source);
             element.appendChild(child);
@@ -30,7 +30,7 @@ class Bgm {
         let elements = [];
         let {volume=1} = options;
         let element = document.createElement("audio");
-//         element.volume = volume/16;
+        element.volume = volume;
         element.loop = true;
         for(let source of sources) {
             let child = document.createElement("source");
